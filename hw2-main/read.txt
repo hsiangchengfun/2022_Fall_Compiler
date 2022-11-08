@@ -1,0 +1,5 @@
+To run my parser
+Just
+1. lex scanner.l
+2. cc lex.yy.c -o scanner -ll
+3. make test

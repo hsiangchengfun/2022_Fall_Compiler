@@ -1,3 +1,7 @@
+
+
+
+
 %{
 /*
  * scanner.l
@@ -12,14 +16,21 @@
 
 int fileno(FILE *);
 
+
 #define YY_USER_ACTION     col_no += yyleng; // note this line
 
-#define MAX_LINE_LENG      256
-#define LIST       strcat(buffer, yytext)
-#define LIST_FLUSH do{ if(opt_list) printf("%s", buffer); *buffer = 0; }while(0)
-#define LOG(TYPE) do{ LIST; if(opt_token) fprintf(stderr, "token(type:%-10s) on line %4d, %3d : %s\n", #TYPE, line_no, col_no - yyleng, yytext); } while(0)
 
-int opt_list = 1, opt_token = 0;
+
+#define MAX_LINE_LENG      256
+#define LIST       if(mode==1)strcat(buffer, yytext)
+#define LIST_FLUSH do{ if(opt_list) printf("%s", buffer); *buffer = 0; }while(0)
+#define LOG(TYPE) do{  LIST; } while(0)//fprintf(stderr, "token(type:%-10s) on line %4d, %3d : %s\n", #TYPE, line_no, col_no - yyleng, yytext); } while(0)
+#define LOGcomment1 do{ LIST;} while(0)//fprintf(stderr,"[INFO ] line %4d:%3d comment string\n" , line_no , col_no - yyleng );}while(0)
+#define LOGcommentstart do{ LIST;} while(0)//fprintf(stderr,"[INFO ] line %4d:%3d comment string start\n" , line_no , col_no - yyleng ); }while(0)
+#define LOGcommentend do{ LIST;}while(0)//fprintf(stderr,"[INFO ] line %4d:%3d comment string end\n" , line_no , col_no - yyleng );}while(0)
+// #define func do{*(buffer-1)="-";buffer = &(buffer -1);}while(0)
+int mode = 1;
+int opt_list = 1 , opt_token = 0;
 int line_no = 1, col_no = 1;
 char buffer[MAX_LINE_LENG];
 
@@ -54,6 +65,10 @@ W [wW]
 X [xX]
 Y [yY]
 Z [zZ]
+%x TEST
+%x COMMENT0
+%x COMMENT1
+%x minusnum
 
 %%
                              /* v could do something */
@@ -98,22 +113,71 @@ Z [zZ]
 "<="                        {LOG(KEYWORD); return(LETOP);      }
 "!="                        {LOG(KEYWORD); return(NEQOP);      }
 
+
+
+
   /* define identifier here */
+[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]+         {LOG(IDENTIFIER);return(IDENTIFIER);}
+[a-zA-Z][a-zA-Z0-9]*           {LOG(IDENTIFIER);return(IDENTIFIER);}
 
   /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
+([0-9]+)                      {LOG(NUMBER);return(INTEGERNUM);}
+  /* // "(-"  {BEGIN minusnum;}
+  // ([\-][0-9]+)                      {LOG(NUMBER);func;return(INTEGERNUM);}
+  */
+[0-9]+"."[0-9]+             {LOG(NUMBER);return(REALNUMBER);}
+[0-9]+"."*[0-9]*[Ee][+-]*[0-9]+ {LOG(NUMBER);return(SCIENTIFIC);}
+
+
 
   /* define single/multiple line comment here */
+  /* comment0 => pair */
+  /* comment1 => //   */
+
+"//".*                    {LOGcomment1;LIST_FLUSH;}
+   /* ^"//".* */
+ 
+<INITIAL>"/*"           {LIST;BEGIN COMMENT0;}
+<COMMENT0>"*"[^/\n]     {LIST;BEGIN COMMENT0;}
+<COMMENT0>[^*\n]*            {LIST;BEGIN COMMENT0;}
+<COMMENT0>"*/"          {LIST;BEGIN INITIAL;}
+
+
 
   /* define string constant (LITERALSTR) here */
 
+[\"][^"\n"]*[\"]      {LOG(STRING);return(LITERALSTR);} 
+
+
+
   /* define pragma here */
+
+"#"[ ]*"pragma"[ ]*"list"[ ]*"on"      {
+  mode = 1 ;
+  LIST;
+}
+
+"#"[ ]*"pragma"[ ]*"list"[ ]*"off"     {
+  mode = 0 ;
+}
+
+
+
+  
+
+
+  
 
 [ \t\f\r]    LIST;
 
-\n {
+<INITIAL,COMMENT0>\n {
   LIST;
   LIST_FLUSH;
   line_no++, col_no = 1;
 }
 
 .  { LIST; fprintf(stderr, "[ERROR] line %4d:%3d lexical analyzer error %s\n", line_no, col_no - yyleng, yytext); }
+
+%%
+
+int yywrap() { fclose(yyin), exit(0); }
