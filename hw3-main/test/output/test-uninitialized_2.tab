@@ -1,0 +1,80 @@
+
+Reduction(identifier_list -> ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(declartions -> )
+PROGRAM aa(input, output, error); 
+Reduction(identifier_list -> ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(standard_type -> INTEGER)
+Reduction(type -> standard_type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR a, b, c: INTEGER;
+Reduction(identifier_list -> ID)
+From here
+0
+Reduction(standard_type -> INTEGER)
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(standard_type -> INTEGER)
+Reduction(type -> standard_type)
+Reduction(type -> ARRAY ( NUM .. NUM ) OF type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR arr : ARRAY[0..10] of INTEGER;
+Reduction(subprogram_declarations -> )
+BEGIN
+Reduction(tail -> )
+Reduction(variable -> ID tail )
+Reduction(tail -> )
+Reduction(factor -> ID tail )
+Reduction(term -> factor )
+Reduction(simple_expression -> term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement )
+    a := b;         
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+Reduction(simple_expression -> term )
+Reduction(addop -> PLUS )
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+Reduction(simple_expression -> simple_expression addop term )
+Reduction(addop -> MINUS )
+Reduction(tail -> )
+Reduction(factor -> ID tail )
+Reduction(term -> factor )
+Reduction(simple_expression -> simple_expression addop term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(tail -> )
+Reduction(tail -> ( expression ) tail )
+Reduction(variable -> ID tail )
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+    arr[3+5-c] := 8 
+Reduction(simple_expression -> term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement_list ; statement )
+Reduction(optional_statements -> statement_list )
+Reduction(compound_statement -> begin optional_statements END )
+id str (null)
+From here
+0
+Reduction(prog -> PROGRAM ID ( identifier_list ) ; declartions subprogram_declartionscompound_statement.)
+create a scope
+END.

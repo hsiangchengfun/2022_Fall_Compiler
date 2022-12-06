@@ -1,0 +1,134 @@
+
+Reduction(identifier_list -> ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(declartions -> )
+PROGRAM aa(input, output, error); 
+Reduction(identifier_list -> ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(standard_type -> INTEGER)
+Reduction(type -> standard_type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR a, b: INTEGER;
+Reduction(identifier_list -> ID)
+Reduction(standard_type -> REAL)
+Reduction(type -> standard_type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR c: REAL;
+
+Reduction(subprogram_declarations -> )
+Reduction(arguments ->  )
+Reduction(standard_type -> INTEGER)
+Reduction(subprogram_head -> FUNCTION ID arguments : standard_type ;)
+Reduction(declartions -> )
+FUNCTION tt : INTEGER;
+Reduction(subprogram_declarations -> )
+BEGIN
+Reduction(tail -> )
+Reduction(variable -> ID tail )
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+  tt := 3
+Reduction(simple_expression -> term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement )
+Reduction(optional_statements -> statement_list )
+Reduction(compound_statement -> begin optional_statements END )
+Reduction(subprogram_declaration -> subprogram_head declarations compound_statement)
+create a scope
+Reduction(subprogram_declarations -> subprogram_declarations subprogram_declaration ;)
+END;
+
+Reduction(optional_var ->  )
+Reduction(identifier_list -> ID)
+Reduction(identifier_list -> identifier_list , ID)
+Reduction(standard_type -> REAL)
+Reduction(type -> standard_type)
+Reduction(parameter_list -> optional_var identifier_list : type )
+Reduction(arguments -> ( parameter_list ) )
+Reduction(standard_type -> INTEGER)
+Reduction(subprogram_head -> FUNCTION ID arguments : standard_type ;)
+Reduction(declartions -> )
+FUNCTION bb (a,b : REAL) : INTEGER;
+Reduction(identifier_list -> ID)
+Reduction(standard_type -> INTEGER)
+Reduction(type -> standard_type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR c : INTEGER;
+Reduction(identifier_list -> ID)
+From here
+0
+Reduction(standard_type -> INTEGER)
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(standard_type -> INTEGER)
+Reduction(type -> standard_type)
+Reduction(type -> ARRAY ( NUM .. NUM ) OF type)
+Reduction(declartions -> declarations VAR identifier_list : type ;)
+VAR d : ARRAY[1..2] of INTEGER;
+Reduction(subprogram_declarations -> )
+BEGIN
+Reduction(tail -> )
+Reduction(variable -> ID tail )
+Reduction(tail -> )
+Reduction(factor -> ID tail )
+Reduction(term -> factor )
+Reduction(simple_expression -> term )
+Reduction(addop -> PLUS )
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+Reduction(simple_expression -> simple_expression addop term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement )
+  bb := tt+3;
+Reduction(tail -> )
+Reduction(variable -> ID tail )
+  tt := a   
+Reduction(tail -> )
+Reduction(factor -> ID tail )
+Reduction(term -> factor )
+Reduction(simple_expression -> term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement_list ; statement )
+Reduction(optional_statements -> statement_list )
+Reduction(compound_statement -> begin optional_statements END )
+Reduction(subprogram_declaration -> subprogram_head declarations compound_statement)
+create a scope
+Reduction(subprogram_declarations -> subprogram_declarations subprogram_declaration ;)
+END;
+
+BEGIN
+Reduction(tail -> )
+Reduction(variable -> ID tail )
+From here
+0
+Reduction(standard_type -> INTEGER)
+Reduction(factor -> NUM )
+Reduction(term -> factor )
+    a := 3
+Reduction(simple_expression -> term )
+Reduction(boolexpression -> simple_expression )
+Reduction(expression -> boolexpression )
+Reduction(statement -> variable := expression )
+Reduction(statements_list -> statement )
+Reduction(optional_statements -> statement_list )
+Reduction(compound_statement -> begin optional_statements END )
+id str (null)
+From here
+0
+Reduction(prog -> PROGRAM ID ( identifier_list ) ; declartions subprogram_declartionscompound_statement.)
+create a scope
+END.

@@ -1,0 +1,51 @@
+create a scope
+add new symbol aa
+add new symbol a
+add new symbol b
+add new symbol c
+add new symbol tt
+create a scope
+add new symbol aaa
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|aaa         |   1   |int                                             |
+|tt          |   0   |real                                            |
+|c           |   0   |real                                            |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|aa          |   0   |void                                            |
+-----------------------------------------------------------------------
+add new symbol bb
+create a scope
+add new symbol a
+add new symbol b
+add new symbol c
+add new symbol d
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|d           |   1   |int[1~2]                                        |
+|c           |   1   |int                                             |
+|b           |   1   |real                                            |
+|a           |   1   |real                                            |
+|bb          |   0   |int (real, real)                                |
+|tt          |   0   |real                                            |
+|c           |   0   |real                                            |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|aa          |   0   |void                                            |
+-----------------------------------------------------------------------
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|bb          |   0   |int (real, real)                                |
+|tt          |   0   |real                                            |
+|c           |   0   |real                                            |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|aa          |   0   |void                                            |
+-----------------------------------------------------------------------

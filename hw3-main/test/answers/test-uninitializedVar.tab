@@ -1,0 +1,16 @@
+create a scope
+add new symbol foo
+add new symbol a
+add new symbol b
+add new symbol x
+add new symbol y
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|y           |   0   |int                                             |
+|x           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------
