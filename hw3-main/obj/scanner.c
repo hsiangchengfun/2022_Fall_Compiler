@@ -322,6 +322,7 @@ void yyfree ( void *  );
 	}
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
+/* Begin user sect3 */
 typedef flex_uint8_t YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -596,7 +597,7 @@ int fileno(FILE *);
     col_no += yyleng;
 
 #define MAX_LINE_LENG      256
-#define LIST       strcat(buffer, yytext)
+#define LIST       if(mode==1)strcat(buffer, yytext)
 #define LIST_FLUSH do{ if(opt_list) printf("%s", buffer); *buffer = 0; }while(0)
 #define LOG(TYPE) \
     do{ LIST; \
@@ -631,7 +632,7 @@ int fileno(FILE *);
 #define print_SHOW_SYMTAB_HEAD do { SHOW_SYMTAB_HEAD(); } while(0)
 #define print_SHOW_SYMTAB_TAIL do { SHOW_SYMTAB_TAIL(); } while(0)
 #define print_SYMTAB_ENTRY_FMT do { printf(SYMTAB_ENTRY_FMT,"ayh3",200,"sey"); } while(0)
-
+struct nodeType* newTokenNode(int Type);
 
 
 #ifdef __cplusplus
@@ -642,10 +643,10 @@ int opt_list = 1, opt_token = 0;
 int line_no = 1, col_no = 1;
 char buffer[MAX_LINE_LENG];
 
-#line 646 "obj/scanner.c"
+#line 647 "obj/scanner.c"
 #define YY_NO_INPUT 1
 
-#line 649 "obj/scanner.c"
+#line 650 "obj/scanner.c"
 
 #define INITIAL 0
 #define TEST 1
@@ -868,7 +869,7 @@ YY_DECL
 
 #line 108 "scanner.l"
                              /* v could do something */
-#line 872 "obj/scanner.c"
+#line 873 "obj/scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -928,197 +929,197 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 109 "scanner.l"
-{LOG(KEYWORD); return(PROGRAM);    }
+{yylval.node = newTokenNode(PROGRAM);yylval.node->lineno=line_no; return(PROGRAM);    }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 110 "scanner.l"
-{LOG(KEYWORD); return(VAR);        }
+{yylval.node = newTokenNode(VAR);return(VAR);        }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 111 "scanner.l"
-{LOG(KEYWORD); return(ARRAY);      }
+{yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);      }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 112 "scanner.l"
-{LOG(KEYWORD); return(OF);         }
+{yylval.node = newTokenNode(OF);return(OF);         }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 113 "scanner.l"
-{LOG(KEYWORD); return(INTEGER);    }
+{yylval.node = newTokenNode(INTEGER);yylval.node->lineno=line_no; return(INTEGER);    }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 114 "scanner.l"
-{LOG(KEYWORD); return(REAL);       }
+{yylval.node = newTokenNode(REAL);yylval.node->lineno=line_no; return(REAL);       }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 115 "scanner.l"
-{LOG(KEYWORD); return(STRING);     }
+{yylval.node = newTokenNode(STRING);yylval.node->lineno=line_no;return(STRING);     }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 116 "scanner.l"
-{LOG(KEYWORD); return(FUNCTION);   }
+{yylval.node = newTokenNode(FUNCTION);yylval.node->lineno=line_no; return(FUNCTION);   }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 117 "scanner.l"
-{LOG(KEYWORD); return(PROCEDURE);  }
+{yylval.node = newTokenNode(PROCEDURE);yylval.node->lineno=line_no;return(PROCEDURE);  }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 118 "scanner.l"
-{LOG(KEYWORD); return(PBEGIN);     }
+{yylval.node = newTokenNode(PBEGIN); return(PBEGIN);     }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 119 "scanner.l"
-{LOG(KEYWORD); return(END);        }
+{yylval.node = newTokenNode(END);yylval.node->lineno=line_no; return(END);        }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 120 "scanner.l"
-{LOG(KEYWORD); return(IF);         }
+{yylval.node = newTokenNode(IF); return(IF);         }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 121 "scanner.l"
-{LOG(KEYWORD); return(THEN);       }
+{yylval.node = newTokenNode(THEN); return(THEN);       }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 122 "scanner.l"
-{LOG(KEYWORD); return(ELSE);       }
+{yylval.node = newTokenNode(ELSE); return(ELSE);       }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 123 "scanner.l"
-{LOG(KEYWORD); return(WHILE);      }
+{yylval.node = newTokenNode(WHILE);return(WHILE);      }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 124 "scanner.l"
-{LOG(KEYWORD); return(DO);         }
+{yylval.node = newTokenNode(DO); return(DO);         }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 125 "scanner.l"
-{LOG(KEYWORD); return(NOT);        }
+{yylval.node = newTokenNode(NOT); return(NOT);        }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 126 "scanner.l"
-{LOG(KEYWORD); return(AND);        }
+{yylval.node = newTokenNode(AND); return(AND);        }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 127 "scanner.l"
-{LOG(KEYWORD); return(OR);         }
+{yylval.node = newTokenNode(OR); return(OR);         }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 129 "scanner.l"
-{LOG(KEYWORD); return(LPAREN);     }
+{yylval.node = newTokenNode(LPAREN); return(LPAREN);     }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 130 "scanner.l"
-{LOG(KEYWORD); return(RPAREN);     }
+{yylval.node = newTokenNode(RPAREN); return(RPAREN);     }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 131 "scanner.l"
-{LOG(KEYWORD); return(SEMICOLON);  }
+{yylval.node = newTokenNode(SEMICOLON); return(SEMICOLON);  }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 132 "scanner.l"
-{LOG(KEYWORD); return(DOT);        }
+{yylval.node = newTokenNode(DOT); return(DOT);        }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 133 "scanner.l"
-{LOG(KEYWORD); return(COMMA);      }
+{yylval.node = newTokenNode(COMMA); return(COMMA);      }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 134 "scanner.l"
-{LOG(KEYWORD); return(COLON);      }
+{yylval.node = newTokenNode(COLON); return(COLON);      }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 135 "scanner.l"
-{LOG(KEYWORD); return(LBRACE);     }
+{yylval.node = newTokenNode(LBRACE); return(LBRACE);     }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 136 "scanner.l"
-{LOG(KEYWORD); return(RBRACE);     }
+{yylval.node = newTokenNode(RBRACE); return(RBRACE);     }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 137 "scanner.l"
-{LOG(KEYWORD); return(DOTDOT);     }
+{yylval.node = newTokenNode(DOTDOT); return(DOTDOT);     }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 138 "scanner.l"
-{LOG(KEYWORD); return(ASSIGNMENT); }
+{yylval.node = newTokenNode(ASSIGNMENT); return(ASSIGNMENT); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 139 "scanner.l"
-{LOG(KEYWORD); return(ADDOP);      }
+{yylval.node = newTokenNode(NODE_addop);yylval.node->lineno=line_no;yylval.node->op = NODE_ADDOP; return(ADDOP);      }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 140 "scanner.l"
-{LOG(KEYWORD); return(SUBOP);      }
+{yylval.node = newTokenNode(NODE_addop);yylval.node->lineno=line_no;yylval.node->op = NODE_SUBOP; return(SUBOP);      }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 141 "scanner.l"
-{LOG(KEYWORD); return(MULOP);      }
+{yylval.node = newTokenNode(NODE_mulop);yylval.node->lineno=line_no;yylval.node->op = NODE_MULOP; return(MULOP);      }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 142 "scanner.l"
-{LOG(KEYWORD); return(DIVOP);      }
+{yylval.node = newTokenNode(NODE_mulop);yylval.node->lineno=line_no;yylval.node->op = NODE_DIVOP; return(DIVOP);      }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 143 "scanner.l"
-{LOG(KEYWORD); return(GTOP);       }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_GTOP; return(GTOP);       }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 144 "scanner.l"
-{LOG(KEYWORD); return(LTOP);       }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_LTOP; return(LTOP);       }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 145 "scanner.l"
-{LOG(KEYWORD); return(EQOP);       }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_EQOP; return(EQOP);       }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 146 "scanner.l"
-{LOG(KEYWORD); return(GETOP);      }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_GETOP; return(GETOP);      }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 147 "scanner.l"
-{LOG(KEYWORD); return(LETOP);      }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_LETOP; return(LETOP);      }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 148 "scanner.l"
-{LOG(KEYWORD); return(NEQOP);      }
+{yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_NEQOP; return(NEQOP);      }
 	YY_BREAK
 /* define identifier here */
 /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
@@ -1133,71 +1134,68 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 167 "scanner.l"
-{LOG(IDENTIFIER);return(IDENTIFIER);}
+{yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 168 "scanner.l"
-{LOG(IDENTIFIER);return(IDENTIFIER);}
+{yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
 	YY_BREAK
 /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
 case 42:
 YY_RULE_SETUP
 #line 171 "scanner.l"
-{LOG(NUMBER);return(INTEGERNUM);}
+{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_I_VALID;yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
 	YY_BREAK
-/* // "(-"  {BEGIN minusnum;}
-  // ([\-][0-9]+)                      {LOG(NUMBER);func;return(INTEGERNUM);}
-  */
 case 43:
 YY_RULE_SETUP
-#line 175 "scanner.l"
-{LOG(NUMBER);return(REALNUMBER);}
+#line 173 "scanner.l"
+{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_R_VALID;yylval.node->iValue = atoi(yytext);return(REALNUMBER);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 176 "scanner.l"
-{LOG(NUMBER);return(SCIENTIFIC);}
+#line 174 "scanner.l"
+{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_S_VALID;yylval.node->iValue = atoi(yytext);return(SCIENTIFIC);}
 	YY_BREAK
 /* define single/multiple line comment here */
 /* comment0 => pair */
 /* comment1 => //   */
 case 45:
 YY_RULE_SETUP
-#line 184 "scanner.l"
+#line 182 "scanner.l"
 {LIST_FLUSH;}
 	YY_BREAK
 /* ^"//".* */
 case 46:
 YY_RULE_SETUP
-#line 187 "scanner.l"
+#line 185 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 188 "scanner.l"
+#line 186 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 189 "scanner.l"
+#line 187 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 190 "scanner.l"
+#line 188 "scanner.l"
 {LIST;BEGIN INITIAL;}
 	YY_BREAK
 /* define string constant (LITERALSTR) here */
 case 50:
 YY_RULE_SETUP
-#line 196 "scanner.l"
+#line 194 "scanner.l"
 {LOG(STRING);return(LITERALSTR);} 
 	YY_BREAK
 /* define pragma here */
 case 51:
 YY_RULE_SETUP
-#line 202 "scanner.l"
+#line 200 "scanner.l"
 {
   mode = 1 ;
   LIST;
@@ -1205,20 +1203,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 207 "scanner.l"
+#line 205 "scanner.l"
 {
   mode = 0 ;
 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 216 "scanner.l"
+#line 214 "scanner.l"
 LIST;
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 218 "scanner.l"
+#line 216 "scanner.l"
 {
   LIST;
   LIST_FLUSH;
@@ -1227,7 +1225,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 224 "scanner.l"
+#line 222 "scanner.l"
 { LIST; fprintf(stderr, "[ERROR] line %4d:%3d lexical analyzer error %s\n", line_no, col_no - yyleng, yytext); }
 	YY_BREAK
 case 56:
@@ -1235,7 +1233,7 @@ YY_RULE_SETUP
 #line 225 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1239 "obj/scanner.c"
+#line 1237 "obj/scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(TEST):
 case YY_STATE_EOF(COMMENT0):
@@ -2208,3 +2206,23 @@ void yyfree (void * ptr )
 #define YYTABLES_NAME "yytables"
 
 #line 225 "scanner.l"
+
+
+
+
+void commenteof()
+{
+ fprintf (stderr, "unexpected EOF inside comment at line %d\n", line_no);
+ exit (1);
+}
+
+
+struct nodeType* newTokenNode(int Type) {
+    struct nodeType* node = newNode(NODE_TOKEN);//all the node's default type is Node_Token.
+    node->tokenType = Type;
+    return node;
+}
+
+
+
+

@@ -1,43 +1,15 @@
+create a new Scope
+test:44
+Enter a Symbol writeln,scope:0,type:5,dtype:2 
+test:39
+test:45
+test:45
+test:45
+test:39
+test:23
+test:39
+test:23
+test:39
+close a scope
 
-Reduction(identifier_list -> ID)
-Reduction(identifier_list -> identifier_list , ID)
-Reduction(identifier_list -> identifier_list , ID)
-Reduction(declartions -> )
-PROGRAM foo(input, output, error) ;
-   
-
-Reduction(identifier_list -> ID)
-Reduction(identifier_list -> identifier_list , ID)
-Reduction(identifier_list -> identifier_list , ID)
-Reduction(standard_type -> INTEGER)
-Reduction(type -> standard_type)
-Reduction(declartions -> declarations VAR identifier_list : type ;)
-   var a, b, c: integer;
-
-Reduction(subprogram_declarations -> )
-   begin
-Reduction(tail -> )
-Reduction(variable -> ID tail )
-Reduction(tail -> )
-Reduction(factor -> ID tail )
-Reduction(term -> factor )
-Reduction(mulop -> STAR )
-From here
-0
-Reduction(standard_type -> INTEGER)
-Reduction(factor -> NUM )
-Reduction(term -> term mulop factor )
-      d := a * 15  
-Reduction(simple_expression -> term )
-Reduction(boolexpression -> simple_expression )
-Reduction(expression -> boolexpression )
-Reduction(statement -> variable := expression )
-Reduction(statements_list -> statement )
-Reduction(optional_statements -> statement_list )
-Reduction(compound_statement -> begin optional_statements END )
-id str (null)
-From here
-0
-Reduction(prog -> PROGRAM ID ( identifier_list ) ; declartions subprogram_declartionscompound_statement.)
-create a scope
-   end.   
+End!

@@ -1615,11 +1615,11 @@ yyreduce:
         struct nodeType* id;
 	    	id = newNode(NODE_IDENTIFIER);
             id->string = (yyvsp[-8].string);
-            printf("id str %s\n",id->string);
-            printf("From here\n");
+            // printf("id str %s\n",id->string);
+            // printf("From here\n");
             // printf("%s\n",$1->string);
             // char* ss=$2;
-            printf("%d\n",id->tokenType);
+            // printf("wjio;gj;poi %d\n",id->tokenType);
             // printf("%s\n",$4);
             // printf("%s\n",$5);
 	    	(yyval.node)=newNode(NODE_prog);
@@ -1630,10 +1630,10 @@ yyreduce:
 	    	addChild((yyval.node),(yyvsp[-2].node));
 	    	addChild((yyval.node),(yyvsp[-1].node));
 	    	ASTROOT = (yyval.node);
-	    	printf("Reduction(prog -> PROGRAM ID ( identifier_list ) ; declartions subprogram_declartions");
-	    	printf("compound_statement.)\n");	
+	    	// printf("Reduction(prog -> PROGRAM ID ( identifier_list ) ; declartions subprogram_declartions");
+	    	// printf("compound_statement.)\n");	
 
-            print_SHOW_NEWSCP;
+            // print_SHOW_NEWSCP;
         /*
         printf("program node is @ line: %d, column: %d\n",
                     @1.first_line, @1.first_column);
@@ -1652,7 +1652,7 @@ yyreduce:
 	    	id = newNode(NODE_IDENTIFIER);
             id->string = (yyvsp[0].string);
 			addChild((yyval.node),id);
-                    printf("Reduction(identifier_list -> ID)\n");
+                    // printf("Reduction(identifier_list -> ID1)\n");
                 }
 #line 1658 "obj/parser.c"
     break;
@@ -1667,7 +1667,7 @@ yyreduce:
 	    	id = newNode(NODE_IDENTIFIER);
             id->string = (yyvsp[0].string);
 			addChild((yyval.node),id);
-                    printf("Reduction(identifier_list -> identifier_list , ID)\n");
+                    // printf("Reduction(identifier_list -> identifier_list , ID)\n");
                 }
 #line 1673 "obj/parser.c"
     break;
@@ -1681,7 +1681,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-3].node));
 			addChild((yyval.node),newNode(NODE_COLON));
 			addChild((yyval.node),(yyvsp[-1].node));
-			printf("Reduction(declartions -> declarations VAR identifier_list : type ;)\n");
+			// printf("Reduction(declartions -> declarations VAR identifier_list : type ;)\n");
 		}
 #line 1687 "obj/parser.c"
     break;
@@ -1690,7 +1690,7 @@ yyreduce:
 #line 157 "parser.y"
           {
 			(yyval.node)=newNode(NODE_declarations);
-			printf("Reduction(declartions -> )\n");
+			// printf("Reduction(declartions -> )\n");
 		}
 #line 1696 "obj/parser.c"
     break;
@@ -1700,7 +1700,7 @@ yyreduce:
                     {
     (yyval.node)=newNode(NODE_type);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(type -> standard_type)\n");
+    //   printf("Reduction(type -> standard_type)\n");
     }
 #line 1706 "obj/parser.c"
     break;
@@ -1722,7 +1722,7 @@ yyreduce:
 			addChild((yyval.node),n2);
 			addChild((yyval.node),newNode(NODE_OF));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(type -> ARRAY ( NUM .. NUM ) OF type)\n");
+    //   printf("Reduction(type -> ARRAY ( NUM .. NUM ) OF type)\n");
     }
 #line 1728 "obj/parser.c"
     break;
@@ -1731,12 +1731,12 @@ yyreduce:
 #line 187 "parser.y"
                 {
 			(yyval.node)=newNode(NODE_standard_type);
-            printf("From here\n");
+            // printf("From here\n");
             // printf("%s\n",$1->string);
             // char* ss=$2;
-            printf("%d\n",(yyval.node)->tokenType);
+            // printf("%d\n",$$->tokenType);
 			addChild((yyval.node),newNode(NODE_INTEGERNUM));
-			printf("Reduction(standard_type -> INTEGER)\n");
+			// printf("Reduction(standard_type -> INTEGER)\n");
 		}
 #line 1742 "obj/parser.c"
     break;
@@ -1746,7 +1746,7 @@ yyreduce:
                     {
 			(yyval.node)=newNode(NODE_standard_type);
 			addChild((yyval.node),newNode(NODE_REALNUMBER));
-			printf("Reduction(standard_type -> REAL)\n");
+			// printf("Reduction(standard_type -> REAL)\n");
 		}
 #line 1752 "obj/parser.c"
     break;
@@ -1756,7 +1756,7 @@ yyreduce:
                 {
     		(yyval.node)=newNode(NODE_num);
 			addChild((yyval.node),newNode(NODE_SCIENTIFIC));
-			printf("Reduction(standard_type -> STRING)\n");
+			// printf("Reduction(standard_type -> STRING)\n");
     	}
 #line 1762 "obj/parser.c"
     break;
@@ -1766,7 +1766,7 @@ yyreduce:
                        {
 			(yyval.node)=newNode(NODE_standard_type);
 			addChild((yyval.node),newNode(NODE_INTEGER));
-			printf("Reduction(standard_type -> INTEGER)\n");
+			// printf("Reduction(standard_type -> INTEGER)\n");
 		}
 #line 1772 "obj/parser.c"
     break;
@@ -1776,7 +1776,7 @@ yyreduce:
               {
 			(yyval.node)=newNode(NODE_standard_type);
 			addChild((yyval.node),newNode(NODE_REAL));
-			printf("Reduction(standard_type -> REAL)\n");
+			// printf("Reduction(standard_type -> REAL)\n");
 		}
 #line 1782 "obj/parser.c"
     break;
@@ -1786,7 +1786,7 @@ yyreduce:
             {
     		(yyval.node)=newNode(NODE_standard_type);
 			addChild((yyval.node),newNode(NODE_STRING));
-			printf("Reduction(standard_type -> STRING)\n");
+			// printf("Reduction(standard_type -> STRING)\n");
     	}
 #line 1792 "obj/parser.c"
     break;
@@ -1798,7 +1798,7 @@ yyreduce:
       (yyval.node)=newNode(NODE_subprogram_declarations);
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),(yyvsp[-1].node));
-			printf("Reduction(subprogram_declarations -> subprogram_declarations subprogram_declaration ;)\n");	
+			// printf("Reduction(subprogram_declarations -> subprogram_declarations subprogram_declaration ;)\n");	
 
             // printf("create a scope\n");
 
@@ -1813,7 +1813,7 @@ yyreduce:
 
         // printf("create a scope\n");
 			(yyval.node)=newNode(NODE_subprogram_declarations);
-			printf("Reduction(subprogram_declarations -> )\n");	
+			// printf("Reduction(subprogram_declarations -> )\n");	
 		}
 #line 1819 "obj/parser.c"
     break;
@@ -1825,11 +1825,11 @@ yyreduce:
 							addChild((yyval.node),(yyvsp[-3].node));
 							addChild((yyval.node),(yyvsp[-2].node));
 							addChild((yyval.node),(yyvsp[-1].node));
-              printf("Reduction(subprogram_declaration -> subprogram_head declarations compound_statement)\n"); 
+            //   printf("Reduction(subprogram_declaration -> subprogram_head declarations compound_statement)\n"); 
 
 
 
-            print_SHOW_NEWSCP;            
+            // print_SHOW_NEWSCP;            
             }
 #line 1835 "obj/parser.c"
     break;
@@ -1846,7 +1846,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-3].node));
 			addChild((yyval.node),newNode(NODE_COLON));
 			addChild((yyval.node),(yyvsp[-1].node));
-      printf("Reduction(subprogram_head -> FUNCTION ID arguments : standard_type ;)\n");  
+    //   printf("Reduction(subprogram_head -> FUNCTION ID arguments : standard_type ;)\n");  
     }
 #line 1852 "obj/parser.c"
     break;
@@ -1861,7 +1861,7 @@ yyreduce:
             id->string = (yyvsp[-2].string);
             addChild((yyval.node),id);
 			addChild((yyval.node),(yyvsp[-1].node));
-      printf("Reduction(subprogram_head -> PROCEDURE ID arguments)\n"); 
+    //   printf("Reduction(subprogram_head -> PROCEDURE ID arguments)\n"); 
     }
 #line 1867 "obj/parser.c"
     break;
@@ -1871,7 +1871,7 @@ yyreduce:
                                         {
       (yyval.node)=newNode(NODE_arguments);
 			addChild((yyval.node),(yyvsp[-1].node));
-      printf("Reduction(arguments -> ( parameter_list ) )\n");
+    //   printf("Reduction(arguments -> ( parameter_list ) )\n");
     }
 #line 1877 "obj/parser.c"
     break;
@@ -1880,7 +1880,7 @@ yyreduce:
 #line 290 "parser.y"
     {
     (yyval.node)=newNode(NODE_arguments);
-      printf("Reduction(arguments ->  )\n");
+    //   printf("Reduction(arguments ->  )\n");
     }
 #line 1886 "obj/parser.c"
     break;
@@ -1893,7 +1893,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_COLON));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(parameter_list -> optional_var identifier_list : type )\n");
+    //   printf("Reduction(parameter_list -> optional_var identifier_list : type )\n");
     }
 #line 1899 "obj/parser.c"
     break;
@@ -1908,7 +1908,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_SEMICOLON));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(parameter_list -> optional_var identifier_list : type ; parameter_list )\n");
+    //   printf("Reduction(parameter_list -> optional_var identifier_list : type ; parameter_list )\n");
     }
 #line 1914 "obj/parser.c"
     break;
@@ -1918,7 +1918,7 @@ yyreduce:
                   {
         (yyval.node)=newNode(NODE_optional_var);
 				addChild((yyval.node),newNode(NODE_VAR));
-        printf("Reduction(optional_var -> VAR )\n");
+        // printf("Reduction(optional_var -> VAR )\n");
       }
 #line 1924 "obj/parser.c"
     break;
@@ -1927,7 +1927,7 @@ yyreduce:
 #line 321 "parser.y"
         {
          (yyval.node)=newNode(NODE_optional_var);
-        printf("Reduction(optional_var ->  )\n");
+        // printf("Reduction(optional_var ->  )\n");
       }
 #line 1933 "obj/parser.c"
     break;
@@ -1939,7 +1939,7 @@ yyreduce:
 			addChild((yyval.node),newNode(NODE_PBEGIN));
 			addChild((yyval.node),(yyvsp[-1].node));
 			addChild((yyval.node),newNode(NODE_END));
-      printf("Reduction(compound_statement -> begin optional_statements END )\n");
+    //   printf("Reduction(compound_statement -> begin optional_statements END )\n");
     }
 #line 1945 "obj/parser.c"
     break;
@@ -1949,7 +1949,7 @@ yyreduce:
                                     {
     (yyval.node)=newNode(NODE_optional_statements);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(optional_statements -> statement_list )\n");
+    //   printf("Reduction(optional_statements -> statement_list )\n");
     }
 #line 1955 "obj/parser.c"
     break;
@@ -1958,7 +1958,7 @@ yyreduce:
 #line 344 "parser.y"
                       {
          (yyval.node)=newNode(NODE_optional_statements);
-        printf("Reduction(optional_statements ->  )\n");
+        // printf("Reduction(optional_statements ->  )\n");
       }
 #line 1964 "obj/parser.c"
     break;
@@ -1968,7 +1968,7 @@ yyreduce:
                            {
       (yyval.node)=newNode(NODE_statement_list);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statements_list -> statement )\n");
+    //   printf("Reduction(statements_list -> statement )\n");
     }
 #line 1974 "obj/parser.c"
     break;
@@ -1980,7 +1980,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_SEMICOLON));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statements_list -> statement_list ; statement )\n");
+    //   printf("Reduction(statements_list -> statement_list ; statement )\n");
     }
 #line 1986 "obj/parser.c"
     break;
@@ -1992,7 +1992,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_ASSIGNMENT));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statement -> variable := expression )\n");  
+    //   printf("Reduction(statement -> variable := expression )\n");  
     }
 #line 1998 "obj/parser.c"
     break;
@@ -2002,7 +2002,7 @@ yyreduce:
                        {
 (yyval.node)=newNode(NODE_statement);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statement -> procedure_statement )\n");
+    //   printf("Reduction(statement -> procedure_statement )\n");
     }
 #line 2008 "obj/parser.c"
     break;
@@ -2012,7 +2012,7 @@ yyreduce:
                       {
     (yyval.node)=newNode(NODE_statement);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statement -> compound_statement )\n");
+    //   printf("Reduction(statement -> compound_statement )\n");
     }
 #line 2018 "obj/parser.c"
     break;
@@ -2027,7 +2027,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_ELSE));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statement -> IF expression THEN statement ELSE statement )\n");
+    //   printf("Reduction(statement -> IF expression THEN statement ELSE statement )\n");
     }
 #line 2033 "obj/parser.c"
     break;
@@ -2040,7 +2040,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_DO));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(statement -> WHILE expression DO statement )\n");
+    //   printf("Reduction(statement -> WHILE expression DO statement )\n");
     }
 #line 2046 "obj/parser.c"
     break;
@@ -2049,7 +2049,7 @@ yyreduce:
 #line 400 "parser.y"
     {
     (yyval.node)=newNode(NODE_statement);
-      printf("Reduction(statement ->  )\n");
+    //   printf("Reduction(statement ->  )\n");
     }
 #line 2055 "obj/parser.c"
     break;
@@ -2063,7 +2063,7 @@ yyreduce:
 	    	id->string=(yyvsp[-1].string);
 			addChild((yyval.node),id);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(variable -> ID tail )\n");
+    //   printf("Reduction(variable -> ID tail )\n");
     }
 #line 2069 "obj/parser.c"
     break;
@@ -2074,7 +2074,7 @@ yyreduce:
       (yyval.node)=newNode(NODE_tail);
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(tail -> ( expression ) tail )\n");
+    //   printf("Reduction(tail -> ( expression ) tail )\n");
     }
 #line 2080 "obj/parser.c"
     break;
@@ -2083,7 +2083,7 @@ yyreduce:
 #line 423 "parser.y"
    {
     (yyval.node)=newNode(NODE_tail);	
-      printf("Reduction(tail -> )\n");  
+    //   printf("Reduction(tail -> )\n");  
     }
 #line 2089 "obj/parser.c"
     break;
@@ -2096,7 +2096,7 @@ yyreduce:
 	    	id = newNode(NODE_IDENTIFIER);
 	    	id->string=(yyvsp[0].string);
 			addChild((yyval.node),id);
-      printf("Reduction(procedure_statement -> ID )\n");
+    //   printf("Reduction(procedure_statement -> ID )\n");
     }
 #line 2102 "obj/parser.c"
     break;
@@ -2110,7 +2110,7 @@ yyreduce:
 	    	id->string=(yyvsp[-3].string);
 			addChild((yyval.node),id);
 			addChild((yyval.node),(yyvsp[-1].node));
-        printf("Reduction(procedure_statement -> ID ( expression_list ) )\n");
+        // printf("Reduction(procedure_statement -> ID ( expression_list ) )\n");
     }
 #line 2116 "obj/parser.c"
     break;
@@ -2120,7 +2120,7 @@ yyreduce:
                              {
     (yyval.node)=newNode(NODE_expression_list);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(expression_list -> expression )\n");
+    //   printf("Reduction(expression_list -> expression )\n");
     }
 #line 2126 "obj/parser.c"
     break;
@@ -2132,7 +2132,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),newNode(NODE_COMMA));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(expression_list -> expression_list COMMA expression )\n");
+    //   printf("Reduction(expression_list -> expression_list COMMA expression )\n");
     }
 #line 2138 "obj/parser.c"
     break;
@@ -2142,7 +2142,7 @@ yyreduce:
                             { 
                 (yyval.node)=newNode(NODE_expression);
                 addChild((yyval.node),(yyvsp[0].node));
-                printf("Reduction(expression -> boolexpression )\n");
+                // printf("Reduction(expression -> boolexpression )\n");
             }
 #line 2148 "obj/parser.c"
     break;
@@ -2154,7 +2154,7 @@ yyreduce:
                 addChild((yyval.node),(yyvsp[-2].node));
                 addChild((yyval.node),(yyvsp[-1].node));
                 addChild((yyval.node),(yyvsp[0].node));
-                printf("Reduction(expression -> boolexpression )\n");
+                // printf("Reduction(expression -> boolexpression )\n");
            }
 #line 2160 "obj/parser.c"
     break;
@@ -2167,7 +2167,7 @@ yyreduce:
                 addChild((yyval.node),(yyvsp[-2].node));
                 addChild((yyval.node),(yyvsp[-1].node));
                 addChild((yyval.node),(yyvsp[0].node));
-                printf("Reduction(expression -> boolexpression )\n");
+                // printf("Reduction(expression -> boolexpression )\n");
            }
 #line 2173 "obj/parser.c"
     break;
@@ -2177,7 +2177,7 @@ yyreduce:
                                    {
       (yyval.node)=newNode(NODE_boolexpression);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(boolexpression -> simple_expression )\n");
+    //   printf("Reduction(boolexpression -> simple_expression )\n");
     }
 #line 2183 "obj/parser.c"
     break;
@@ -2189,7 +2189,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),(yyvsp[-1].node));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(boolexpression -> simple_expression relop simple_expression )\n");
+    //   printf("Reduction(boolexpression -> simple_expression relop simple_expression )\n");
     }
 #line 2195 "obj/parser.c"
     break;
@@ -2200,7 +2200,7 @@ yyreduce:
     
         (yyval.node)=newNode(NODE_simple_expression);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(simple_expression -> term )\n");
+    //   printf("Reduction(simple_expression -> term )\n");
     }
 #line 2206 "obj/parser.c"
     break;
@@ -2212,7 +2212,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),(yyvsp[-1].node));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(simple_expression -> simple_expression addop term )\n");
+    //   printf("Reduction(simple_expression -> simple_expression addop term )\n");
     }
 #line 2218 "obj/parser.c"
     break;
@@ -2222,7 +2222,7 @@ yyreduce:
               {
         (yyval.node)=newNode(NODE_term);
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(term -> factor )\n");
+    //   printf("Reduction(term -> factor )\n");
     }
 #line 2228 "obj/parser.c"
     break;
@@ -2234,7 +2234,7 @@ yyreduce:
 			addChild((yyval.node),(yyvsp[-2].node));
 			addChild((yyval.node),(yyvsp[-1].node));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(term -> term mulop factor )\n");
+    //   printf("Reduction(term -> term mulop factor )\n");
     }
 #line 2240 "obj/parser.c"
     break;
@@ -2248,7 +2248,7 @@ yyreduce:
 	    	id->string=(yyvsp[-1].string);
 			addChild((yyval.node),id);
 			addChild((yyval.node),(yyvsp[0].node));
-        printf("Reduction(factor -> ID tail )\n");
+        // printf("Reduction(factor -> ID tail )\n");
     }
 #line 2254 "obj/parser.c"
     break;
@@ -2262,7 +2262,7 @@ yyreduce:
 	    	id->string=(yyvsp[-3].string);
 			addChild((yyval.node),id);
 			addChild((yyval.node),(yyvsp[-1].node));
-      printf("Reduction(factor -> ID ( expression_list ) )\n");
+    //   printf("Reduction(factor -> ID ( expression_list ) )\n");
     }
 #line 2268 "obj/parser.c"
     break;
@@ -2275,7 +2275,7 @@ yyreduce:
 	    	num = newNode(NODE_NUM);
 	    	num->rValue=(yyvsp[0].node);
 	    	addChild((yyval.node),num);
-      printf("Reduction(factor -> NUM )\n");
+    //   printf("Reduction(factor -> NUM )\n");
     }
 #line 2281 "obj/parser.c"
     break;
@@ -2288,7 +2288,7 @@ yyreduce:
 	    	str = newNode(NODE_LITERALSTR);
 	    	str->string=(yyvsp[0].string);
 	    	addChild((yyval.node),str);
-        printf("Reduction(factor -> String )\n");
+        // printf("Reduction(factor -> String )\n");
     }
 #line 2294 "obj/parser.c"
     break;
@@ -2298,7 +2298,7 @@ yyreduce:
                                   {
         (yyval.node)=newNode(NODE_factor);
 			addChild((yyval.node),(yyvsp[-1].node));
-        printf("Reduction(factor -> ( expression ) )\n");
+        // printf("Reduction(factor -> ( expression ) )\n");
     }
 #line 2304 "obj/parser.c"
     break;
@@ -2309,7 +2309,7 @@ yyreduce:
      (yyval.node)=newNode(NODE_factor);
 			addChild((yyval.node),newNode(NODE_NOT));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(factor -> ( NOT factor ) )\n");
+    //   printf("Reduction(factor -> ( NOT factor ) )\n");
     }
 #line 2315 "obj/parser.c"
     break;
@@ -2321,7 +2321,7 @@ yyreduce:
      (yyval.node)=newNode(NODE_factor);
 			addChild((yyval.node),newNode(NODE_SUBOP));
 			addChild((yyval.node),(yyvsp[0].node));
-      printf("Reduction(factor -> ( SUBOP factor ) )\n");
+    //   printf("Reduction(factor -> ( SUBOP factor ) )\n");
     }
 #line 2327 "obj/parser.c"
     break;
@@ -2331,7 +2331,7 @@ yyreduce:
              {
     (yyval.node)=newNode(NODE_addop);
 			addChild((yyval.node),newNode(NODE_ADDOP));
-      printf("Reduction(addop -> PLUS )\n");
+    //   printf("Reduction(addop -> PLUS )\n");
     }
 #line 2337 "obj/parser.c"
     break;
@@ -2341,7 +2341,7 @@ yyreduce:
            {
     (yyval.node)=newNode(NODE_addop);
 			addChild((yyval.node),newNode(NODE_SUBOP));
-      printf("Reduction(addop -> MINUS )\n");
+    //   printf("Reduction(addop -> MINUS )\n");
     }
 #line 2347 "obj/parser.c"
     break;
@@ -2351,7 +2351,7 @@ yyreduce:
              {
       (yyval.node)=newNode(NODE_mulop);
 			addChild((yyval.node),newNode(NODE_MULOP));
-      printf("Reduction(mulop -> STAR )\n");
+    //   printf("Reduction(mulop -> STAR )\n");
     }
 #line 2357 "obj/parser.c"
     break;
@@ -2361,7 +2361,7 @@ yyreduce:
            {
       (yyval.node)=newNode(NODE_mulop);
 			addChild((yyval.node),newNode(NODE_DIVOP));
-      printf("Reduction(mulop -> SLASH )\n");
+    //   printf("Reduction(mulop -> SLASH )\n");
     }
 #line 2367 "obj/parser.c"
     break;
@@ -2370,9 +2370,9 @@ yyreduce:
 #line 607 "parser.y"
              {
       (yyval.node)=newNode(NODE_relop);
-      printf("LTOP %d\n",NODE_relop);
+    //   printf("LTOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_LTOP));
-      printf("Reduction(relop -> LT )\n");
+    //   printf("Reduction(relop -> LT )\n");
     }
 #line 2378 "obj/parser.c"
     break;
@@ -2382,9 +2382,9 @@ yyreduce:
             {
 
      (yyval.node)=newNode(NODE_relop);
-     printf("GTOP %d\n",NODE_relop);
+    //  printf("GTOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_GTOP));
-      printf("Reduction(relop -> GT )\n");
+    //   printf("Reduction(relop -> GT )\n");
     }
 #line 2390 "obj/parser.c"
     break;
@@ -2393,9 +2393,9 @@ yyreduce:
 #line 620 "parser.y"
             {
       (yyval.node)=newNode(NODE_relop);
-      printf("EQOP %d\n",NODE_relop);
+    //   printf("EQOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_EQOP));
-      printf("Reduction(relop -> EQUAL )\n");
+    //   printf("Reduction(relop -> EQUAL )\n");
     }
 #line 2401 "obj/parser.c"
     break;
@@ -2404,9 +2404,9 @@ yyreduce:
 #line 626 "parser.y"
              {
       (yyval.node)=newNode(NODE_relop);
-      printf("LETOP %d\n",NODE_relop);
+    //   printf("LETOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_LETOP));
-      printf("Reduction(relop -> LE )\n");
+    //   printf("Reduction(relop -> LE )\n");
     }
 #line 2412 "obj/parser.c"
     break;
@@ -2415,9 +2415,9 @@ yyreduce:
 #line 632 "parser.y"
              {
       (yyval.node)=newNode(NODE_relop);
-      printf("GETOP %d\n",NODE_relop);
+    //   printf("GETOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_GETOP));
-      printf("Reduction(relop -> GE )\n");
+    //   printf("Reduction(relop -> GE )\n");
     }
 #line 2423 "obj/parser.c"
     break;
@@ -2426,9 +2426,9 @@ yyreduce:
 #line 638 "parser.y"
              {
       (yyval.node)=newNode(NODE_relop);
-      printf("NEQOP %d\n",NODE_relop);
+    //   printf("NEQOP %d\n",NODE_relop);
 			addChild((yyval.node),newNode(NODE_NEQOP));
-      printf("Reduction(relop -> NEQOP )\n");
+    //   printf("Reduction(relop -> NEQOP )\n");
     }
 #line 2434 "obj/parser.c"
     break;
@@ -2696,5 +2696,16 @@ int main(int argc, const char *argv[]) {
     if(ASTROOT){
         // do pass here
     }
+    SymbolTable.size = 0;
+    SymbolTable.status=1;
+    ScopeStack[0]=&SymbolTable;
+    printf("create a new Scope\n");
+    /* printf("Create a new SymbolTable\n"); */
+    semanticCheck(ASTROOT);
+    printf("close a scope\n");
+    /* printf("Close a SymbolTable\n"); */
+    printf("\nEnd!\n");
+
+
     return 0;
 }

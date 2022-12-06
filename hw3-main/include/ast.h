@@ -8,13 +8,13 @@
  * you can design your own
  * struct or class to impl inheritance in c/cpp */
 
-typedef enum{ ProgNode, /* types */ } NodeType;
+// typedef enum{ ProgNode, /* types */ } NodeType;
 
-typedef struct NodeTag{
-  NodeType nt;
-  LocType  loc;
-  /* some fields */
-} *Node, NodeStr;
+// typedef struct NodeTag{
+//   NodeType nt;
+//   LocType  loc;
+//   /* some fields */
+// } *Node, NodeStr;
 
 #define Obj void*
 
