@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "info.h"
 /*
 TO-DO-LIST:
     v1. undeclared variables
@@ -21,16 +22,24 @@ TO-DO-LIST:
 // arguments in funtion?
 // 2-d and 3-d array?
 
+#define print_SHOW_NEWSYM do { SHOW_NEWSYM(sym); } while(0)
+#define print_SHOW_NEWSCP do { SHOW_NEWSCP(); } while(0)
+#define print_SHOW_CLSSCP do { SHOW_CLSSCP(); } while(0)
+#define print_SHOW_SYMTAB_HEAD do { SHOW_SYMTAB_HEAD(); } while(0)
+#define print_SHOW_SYMTAB_TAIL do { SHOW_SYMTAB_TAIL(); } while(0)
+#define print_SYMTAB_ENTRY_FMT do { printf(SYMTAB_ENTRY_FMT,"ayh3",200,"sey"); } while(0)
+
+
 struct SymTable SymbolTable;
 struct SymTable* ScopeStack[100];
 int level=0;//a level counter
 int curlevel=0;
-
+char* sym="kkk";
 
 void OpenScope(){
-    printf("A new scope is opened.\n");        
-    printf("A new SymbolTable is created.\n");
-
+    // printf("A new scope is opened.\n");        
+    // printf("A new SymbolTable is created.\n");
+    print_SHOW_NEWSCP;
     struct SymTable* newTable=calloc(1,sizeof(struct SymTable));
     newTable->status=1;//open scope
     level++;
@@ -38,8 +47,9 @@ void OpenScope(){
     newTable->scope=level;
 }
 void CloseScope(){
-    printf("A scope is closed.\n");        
-    printf("A SymbolTable is deleted.\n");
+    // printf("A scope is closed.\n");        
+    // printf("A SymbolTable is deleted.\n");
+    print_SHOW_CLSSCP;
 
     struct SymTable* temp=ScopeStack[level];
     //free(temp);
@@ -69,9 +79,11 @@ struct SymTableEntry* addVariable(struct SymTableEntry entry,int line_no) {
         printf("line:%d Error: duplicate declaration of variable %s\n",line_no,entry.name);
         //exit(0);
     }
-    printf("Enter a Symbol %s,scope:%d,type:%d,dtype:%d \n",entry.name,entry.scope,entry.type,entry.dtype);
+    // printf("Enter a Symbol %s,scope:%d,type:%d,dtype:%d \n",entry.name,entry.scope,entry.type,entry.dtype);
     struct SymTable* Table=ScopeStack[entry.scope];
-
+    sym=entry.name;
+    printf("Here ");
+    print_SHOW_NEWSYM;
     int index = Table->size;
     //int index = entry.scope;
     //printf("index %d\n",index );
@@ -95,20 +107,27 @@ struct nodeType* nthChild(int n, struct nodeType *node) {
 
 void semanticCheck(struct nodeType *node) {
     //printf("semanticCheck\n");
-    printf("test:%d\n", node->nodeType);
+    // printf("test:%d at\n", node->nodeType,node->lineno);
+    if(node->child!=NULL)printf("node %d has child %d \n",node->nodeType ,node->child->nodeType);
+    else printf("node %d has no child\n",node->nodeType);
     switch(node->nodeType) {
         case NODE_prog:{
+            // printf("Node progggggg\n");
             struct SymTableEntry entry;
             strcpy(entry.name,"writeln");
             entry.type=TypeNull;
             entry.dtype=Procedure;
             entry.scope=0;
             entry.Pptr=NULL;
+            // printf("before add\n");
             addVariable(entry,0);
-
+            // printf("after add\n");
             //goto NODE_declarations
             struct nodeType *child=nthChild(1,node);
+            // printf("child is %s\n",child->dtype);
+
             while(child->child != NULL){
+                // printf("go chiuld\n");
                 semanticCheck(child);
                 child=nthChild(1,child);
             }
@@ -124,7 +143,8 @@ void semanticCheck(struct nodeType *node) {
         case NODE_declarations: {
             /* We only implement integer and real type here,
                you should implement array type by yourself */
-            
+            // printf("Node decalrrrrrrrrrrrrrrre\n");
+
             struct SymTableEntry entry;
             entry.par_flag=0;
             entry.Arraydim=0;
@@ -218,11 +238,15 @@ void semanticCheck(struct nodeType *node) {
         }
         //Function and Procedure appear here
         case NODE_subprogram_declaration:{
+            // printf("Node subprogggggg\n");
+
             OpenScope();
             curlevel++;
             break;
         }
         case NODE_subprogram_head:{
+            // printf("Node subproggggggheaaddddddd\n");
+
             //Looking for Function's return type
             struct nodeType *idNode = nthChild(1, node);
             enum StdType valueType;
@@ -377,6 +401,8 @@ void semanticCheck(struct nodeType *node) {
             //break;
         }
         case NODE_END:{
+            // printf("Node enddddd\n");
+
             //If now is not in "MainScope" then close scope.
             //if(level >= 1) CloseScope();
             if(curlevel != 0) CloseScope();
@@ -385,6 +411,8 @@ void semanticCheck(struct nodeType *node) {
         }
         //ID or ID(....)
         case NODE_procedure_statement:{
+            // printf("Node proceduureg\n");
+
             struct nodeType *idNode = nthChild(1, node);
             //semanticCheck(idNode);//check calling function's id
             //struct SymTableEntry* entry=idNode->entry;
@@ -436,7 +464,7 @@ void semanticCheck(struct nodeType *node) {
             return;
         }
         case NODE_parameter_list:{
-            //printf("enter parameter list\n");
+            printf("enter parameter list\n");
             /*
             struct SymTableEntry entry;
             entry.Arraydim=0;
@@ -506,7 +534,8 @@ void semanticCheck(struct nodeType *node) {
         /* This case is simplified, actually you should check
            the symbol is a variable or a function with no parameter */       
        
-        case NODE_ID: {//Identifier appear at right hand_side
+        case NODE_IDENTIFIER: {//Identifier appear at right hand_side
+            // printf("idddddddddddddddddd\n");
             struct SymTableEntry *entry = findSymbol(node->string);
             if(entry == 0) {
                 printf("line:%d Error: undeclared variable1 %s\n",node->lineno,node->string);
@@ -611,7 +640,7 @@ void semanticCheck(struct nodeType *node) {
             return;
         }    
         case NODE_SYM_REF: {//Identifier appear at left hand_side
-            //printf("sym_ref\n");
+            printf("sym_ref\n");
             struct SymTableEntry *entry = findSymbol(node->string);
             if(entry == 0) {
                 printf("line:%d Error: undeclared variable2 %s\n",node->lineno, node->string);
@@ -682,7 +711,7 @@ void semanticCheck(struct nodeType *node) {
             printf("num:%d\n",node->iValue );     
             return;
         }
-        case NODE_String: {
+        case NODE_LITERALSTR: {
             node->valueType = TypeString;        
             return;
         }
@@ -695,7 +724,7 @@ void semanticCheck(struct nodeType *node) {
         case NODE_OP:
         case NODE_ASSIGNMENT: {
             
-            //printf("assignment\n");
+            printf("assignment\n");
             struct nodeType *child1 = nthChild(1, node);
             struct nodeType *child2 = nthChild(2, node);
             semanticCheck(child1);

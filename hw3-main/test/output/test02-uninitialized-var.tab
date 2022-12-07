@@ -1,15 +1,237 @@
-create a new Scope
-test:44
-Enter a Symbol writeln,scope:0,type:5,dtype:2 
-test:39
-test:45
-test:45
-test:45
-test:39
-test:23
-test:39
-test:23
-test:39
-close a scope
-
-End!
+/NODE_prog
+        /NODE_PROGRAM
+        foo
+        /(
+        /NODE_identifier_list
+                /NODE_identifier_list
+                        /NODE_identifier_list
+                                input
+                        /,
+                        output
+                /,
+                error
+        /)
+        /NODE_declarations
+                /NODE_declarations
+                        /NODE_declarations
+                                /NODE_declarations
+                                        /NODE_declarations
+                                                /NODE_declarations
+                                                /NODE_VAR
+                                                /NODE_identifier_list
+                                                        /NODE_identifier_list
+                                                                /NODE_identifier_list
+                                                                        a
+                                                                /,
+                                                                b
+                                                        /,
+                                                        c
+                                                /:
+                                                /NODE_type
+                                                        /NODE_standard_type
+                                                                /NODE_INTEGER
+                                        /NODE_VAR
+                                        /NODE_identifier_list
+                                                /NODE_identifier_list
+                                                        d
+                                                /,
+                                                e
+                                        /:
+                                        /NODE_type
+                                                /NODE_ARRAY
+                                                /[
+                                                 NODE_num
+                                                         NODE_INTEGERNUM 1
+                                                /..
+                                                 NODE_num
+                                                         NODE_INTEGERNUM 10
+                                                /]
+                                                /NODE_OF
+                                                /NODE_type
+                                                        /NODE_standard_type
+                                                                /NODE_INTEGER
+                                /NODE_VAR
+                                /NODE_identifier_list
+                                        /NODE_identifier_list
+                                                g
+                                        /,
+                                        h
+                                /:
+                                /NODE_type
+                                        /NODE_standard_type
+                                                /NODE_REAL
+                        /NODE_VAR
+                        /NODE_identifier_list
+                                g
+                        /:
+                        /NODE_type
+                                /NODE_ARRAY
+                                /[
+                                 NODE_num
+                                         NODE_INTEGERNUM 23
+                                /..
+                                 NODE_num
+                                         NODE_INTEGERNUM 57
+                                /]
+                                /NODE_OF
+                                /NODE_type
+                                        /NODE_ARRAY
+                                        /[
+                                         NODE_num
+                                                 NODE_INTEGERNUM 23
+                                        /..
+                                         NODE_num
+                                                 NODE_INTEGERNUM 57
+                                        /]
+                                        /NODE_OF
+                                        /NODE_type
+                                                /NODE_ARRAY
+                                                /[
+                                                 NODE_num
+                                                         NODE_INTEGERNUM 23
+                                                /..
+                                                 NODE_num
+                                                         NODE_INTEGERNUM 57
+                                                /]
+                                                /NODE_OF
+                                                /NODE_type
+                                                        /NODE_ARRAY
+                                                        /[
+                                                         NODE_num
+                                                                 NODE_INTEGERNUM 23
+                                                        /..
+                                                         NODE_num
+                                                                 NODE_INTEGERNUM 57
+                                                        /]
+                                                        /NODE_OF
+                                                        /NODE_type
+                                                                /NODE_ARRAY
+                                                                /[
+                                                                 NODE_num
+                                                                         NODE_INTEGERNUM 23
+                                                                /..
+                                                                 NODE_num
+                                                                         NODE_INTEGERNUM 57
+                                                                /]
+                                                                /NODE_OF
+                                                                /NODE_type
+                                                                        /NODE_standard_type
+                                                                                /NODE_REAL
+                /NODE_VAR
+                /NODE_identifier_list
+                        k
+                /:
+                /NODE_type
+                        /NODE_ARRAY
+                        /[
+                         NODE_num
+                                 NODE_INTEGERNUM 23
+                        /..
+                         NODE_num
+                                 NODE_INTEGERNUM 57
+                        /]
+                        /NODE_OF
+                        /NODE_type
+                                /NODE_ARRAY
+                                /[
+                                 NODE_num
+                                         NODE_INTEGERNUM 23
+                                /..
+                                 NODE_num
+                                         NODE_INTEGERNUM 57
+                                /]
+                                /NODE_OF
+                                /NODE_type
+                                        /NODE_standard_type
+                                                /NODE_REAL
+        /NODE_subprogram_declarations
+        /NODE_compound_statement
+                /NODE_PBEGIN
+                /NODE_optional_statements
+                        /NODE_statement_list
+                                /NODE_statement_list
+                                        /NODE_statement
+                                                /NODE_variable
+                                                        a
+                                                        /NODE_tail
+                                                /:=
+                                                /NODE_expression
+                                                        /NODE_boolexpression
+                                                                /NODE_simple_expressiong
+                                                                        /NODE_simple_expressiong
+                                                                                /NODE_term
+                                                                                        /NODE_factor
+                                                                                                a
+                                                                                                /NODE_tail
+                                                                        /NODE_addop
+                                                                                /+
+                                                                        /NODE_term
+                                                                                /NODE_factor
+                                                                                         NODE_num
+                                                                                                 NODE_INTEGERNUM 1
+                                /NODE_statement
+                                        /NODE_variable
+                                                k
+                                                /NODE_tail
+                                                        /[
+                                                        /NODE_expression
+                                                                /NODE_boolexpression
+                                                                        /NODE_simple_expressiong
+                                                                                /NODE_term
+                                                                                        /NODE_factor
+                                                                                                 NODE_num
+                                                                                                         NODE_INTEGERNUM 25
+                                                        /]
+                                                        /NODE_tail
+                                                                /[
+                                                                /NODE_expression
+                                                                        /NODE_boolexpression
+                                                                                /NODE_simple_expressiong
+                                                                                        /NODE_term
+                                                                                                /NODE_factor
+                                                                                                         NODE_num
+                                                                                                                 NODE_INTEGERNUM 20
+                                                                /]
+                                                                /NODE_tail
+                                        /:=
+                                        /NODE_expression
+                                                /NODE_boolexpression
+                                                        /NODE_simple_expressiong
+                                                                /NODE_simple_expressiong
+                                                                        /NODE_term
+                                                                                /NODE_factor
+                                                                                        k
+                                                                                        /NODE_tail
+                                                                                                /[
+                                                                                                /NODE_expression
+                                                                                                        /NODE_boolexpression
+                                                                                                                /NODE_simple_expressiong
+                                                                                                                        /NODE_term
+                                                                                                                                /NODE_factor
+                                                                                                                                         NODE_num
+                                                                                                                                                 NODE_INTEGERNUM 25
+                                                                                                /]
+                                                                                                /NODE_tail
+                                                                                                        /[
+                                                                                                        /NODE_expression
+                                                                                                                /NODE_boolexpression
+                                                                                                                        /NODE_simple_expressiong
+                                                                                                                                /NODE_term
+                                                                                                                                        /NODE_factor
+                                                                                                                                                 NODE_num
+                                                                                                                                                         NODE_INTEGERNUM 20
+                                                                                                        /]
+                                                                                                        /NODE_tail
+                                                                /NODE_addop
+                                                                        /+
+                                                                /NODE_term
+                                                                        /NODE_factor
+                                                                                 NODE_num
+                                                                                         NODE_REALNUMBER 3.140000
+                /NODE_END
+                /NODE_END
+create a scope1
+node 44 has child 74 
+Here add new symbol writeln
+node 39 has no child
+line:2 Error: undeclared variable1 foo

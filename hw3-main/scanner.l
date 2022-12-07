@@ -106,9 +106,9 @@ Z [zZ]
 %%
                              /* v could do something */
 {P}{R}{O}{G}{R}{A}{M}       {yylval.node = newTokenNode(PROGRAM);yylval.node->lineno=line_no; return(PROGRAM);    }
-{V}{A}{R}                   {yylval.node = newTokenNode(VAR);return(VAR);        }
-{A}{R}{R}{A}{Y}             {yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);      }
-{O}{F}                      {yylval.node = newTokenNode(OF);return(OF);         }
+{V}{A}{R}                   {yylval.node = newTokenNode(VAR);return(VAR);}
+{A}{R}{R}{A}{Y}             {yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);}
+{O}{F}                      {yylval.node = newTokenNode(OF);return(OF);}
 {I}{N}{T}{E}{G}{E}{R}       {yylval.node = newTokenNode(INTEGER);yylval.node->lineno=line_no; return(INTEGER);    }
 {R}{E}{A}{L}                {yylval.node = newTokenNode(REAL);yylval.node->lineno=line_no; return(REAL);       }
 {S}{T}{R}{I}{N}{G}          {yylval.node = newTokenNode(STRING);yylval.node->lineno=line_no;return(STRING);     }
@@ -161,16 +161,15 @@ Z [zZ]
     yylval.dval = atoi, atof, strtod, strtol ... (yytext)
  */
 
-
   /* define identifier here */
-[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]+         {yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
-[a-zA-Z][a-zA-Z0-9]*           {yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
+[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]+         {yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext); return(IDENTIFIER);}
+[a-zA-Z][a-zA-Z0-9]*           {yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext);return(IDENTIFIER);}
 
   /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
-([0-9]+)                      {yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_I_VALID;yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
+([0-9]+)                      {yylval.node=newTokenNode(NODE_INTEGERNUM); yylval.node->lineno=line_no; yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
 
-[0-9]+"."[0-9]+             {yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_R_VALID;yylval.node->iValue = atoi(yytext);return(REALNUMBER);}
-[0-9]+"."*[0-9]*[Ee][+-]*[0-9]+ {yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_S_VALID;yylval.node->iValue = atoi(yytext);return(SCIENTIFIC);}
+[0-9]+"."[0-9]+             {yylval.node=newTokenNode(NODE_REALNUMBER); yylval.node->lineno=line_no; yylval.node->rValue = atof(yytext);return(REALNUMBER);}
+[0-9]+"."*[0-9]*[Ee][+-]*[0-9]+ {yylval.node=newTokenNode(NODE_SCIENTIFIC); yylval.node->lineno=line_no; yylval.node->sValue = atof(yytext);return(SCIENTIFIC);}
 
 
 
@@ -190,7 +189,7 @@ Z [zZ]
 
   /* define string constant (LITERALSTR) here */
 
-[\"][^"\n"]*[\"]      {LOG(STRING);return(LITERALSTR);} 
+[\"][^"\n"]*[\"]      {yylval.node = newTokenNode(NODE_LITERALSTR);yylval.node->lineno=line_no;yylval.node->string=strdup(yytext);return(LITERALSTR);} 
 
 
 
@@ -233,7 +232,7 @@ void commenteof()
 
 
 struct nodeType* newTokenNode(int Type) {
-    struct nodeType* node = newNode(NODE_TOKEN);//all the node's default type is Node_Token.
+    struct nodeType* node = newNode(Type);//all the node's default type is Node_Token.
     node->tokenType = Type;
     return node;
 }

@@ -151,11 +151,11 @@ Terminals, with rules where they appear
     PBEGIN <node> (295) 25
     SUBOP <node> (296) 58 60
     NODE_TOKEN <node> (297)
-    INTEGERNUM <val> (298) 8
-    REALNUMBER <dval> (299) 9
-    SCIENTIFIC <dval> (300) 10
-    IDENTIFIER <string> (301) 1 2 3 17 18 36 39 40 52 53
-    LITERALSTR <string> (302) 55
+    INTEGERNUM <node> (298) 8
+    REALNUMBER <node> (299) 9
+    SCIENTIFIC <node> (300) 10
+    IDENTIFIER <node> (301) 1 2 3 17 18 36 39 40 52 53
+    LITERALSTR <node> (302) 55
 
 
 Nonterminals, with rules where they appear

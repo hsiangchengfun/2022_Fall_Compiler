@@ -25,9 +25,9 @@ enum ntype {
               NODE_PROGRAM,
               
               NODE_NUM,NODE_String,NODE_SYM_REF,NODE_OP,
-              NODE_Char,OP_NOT,
+              NODE_Char,OP_NOT,OP_SUB,
               VALUE_I_VALID,VALUE_R_VALID,VALUE_S_VALID,NODE_TYPE_INT,NODE_TYPE_REAL,NODE_TYPE_STRING,
-              NODE_TYPE_CHAR,NODE_TYPE_ARRAY
+              NODE_TYPE_CHAR,NODE_TYPE_ARRAY,
 
 };
 
@@ -50,9 +50,10 @@ struct nodeType {
 
     /* Values for general use */
     int iValue;
-    char* rValue;//for float,int,scientific sign
+    double rValue;//for float,int,scientific sign
     char valueValid;
     char *string;
+    double sValue;
     
     /* Indicates which OP */
     char op;

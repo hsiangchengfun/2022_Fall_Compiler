@@ -106,8 +106,8 @@ union YYSTYPE
   int val;
   char* text;
   double dval;
+  double sval;
   struct nodeType *node;
-  char* number;
   char* string;
 
 #line 114 "obj/parser.h"

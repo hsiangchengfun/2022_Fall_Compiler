@@ -934,17 +934,17 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 110 "scanner.l"
-{yylval.node = newTokenNode(VAR);return(VAR);        }
+{yylval.node = newTokenNode(VAR);return(VAR);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 111 "scanner.l"
-{yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);      }
+{yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 112 "scanner.l"
-{yylval.node = newTokenNode(OF);return(OF);         }
+{yylval.node = newTokenNode(OF);return(OF);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -1133,69 +1133,69 @@ YY_RULE_SETUP
 /* define identifier here */
 case 40:
 YY_RULE_SETUP
-#line 167 "scanner.l"
-{yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
+#line 166 "scanner.l"
+{yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext); return(IDENTIFIER);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 168 "scanner.l"
-{yylval.node = newTokenNode(NODE_ID);yylval.node->lineno=line_no;yylval.node->nodeType=NODE_ID;yylval.node->string=strdup(yytext);return(IDENTIFIER);}
+#line 167 "scanner.l"
+{yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext);return(IDENTIFIER);}
 	YY_BREAK
 /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
 case 42:
 YY_RULE_SETUP
-#line 171 "scanner.l"
-{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_I_VALID;yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
+#line 170 "scanner.l"
+{yylval.node=newTokenNode(NODE_INTEGERNUM); yylval.node->lineno=line_no; yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 173 "scanner.l"
-{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_R_VALID;yylval.node->iValue = atoi(yytext);return(REALNUMBER);}
+#line 172 "scanner.l"
+{yylval.node=newTokenNode(NODE_REALNUMBER); yylval.node->lineno=line_no; yylval.node->rValue = atof(yytext);return(REALNUMBER);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 174 "scanner.l"
-{yylval.node = newTokenNode(NODE_num);yylval.node->lineno=line_no;yylval.node->valueValid = VALUE_S_VALID;yylval.node->iValue = atoi(yytext);return(SCIENTIFIC);}
+#line 173 "scanner.l"
+{yylval.node=newTokenNode(NODE_SCIENTIFIC); yylval.node->lineno=line_no; yylval.node->sValue = atof(yytext);return(SCIENTIFIC);}
 	YY_BREAK
 /* define single/multiple line comment here */
 /* comment0 => pair */
 /* comment1 => //   */
 case 45:
 YY_RULE_SETUP
-#line 182 "scanner.l"
+#line 181 "scanner.l"
 {LIST_FLUSH;}
 	YY_BREAK
 /* ^"//".* */
 case 46:
 YY_RULE_SETUP
-#line 185 "scanner.l"
+#line 184 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 186 "scanner.l"
+#line 185 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 187 "scanner.l"
+#line 186 "scanner.l"
 {LIST;BEGIN COMMENT0;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 188 "scanner.l"
+#line 187 "scanner.l"
 {LIST;BEGIN INITIAL;}
 	YY_BREAK
 /* define string constant (LITERALSTR) here */
 case 50:
 YY_RULE_SETUP
-#line 194 "scanner.l"
-{LOG(STRING);return(LITERALSTR);} 
+#line 193 "scanner.l"
+{yylval.node = newTokenNode(NODE_LITERALSTR);yylval.node->lineno=line_no;yylval.node->string=strdup(yytext);return(LITERALSTR);} 
 	YY_BREAK
 /* define pragma here */
 case 51:
 YY_RULE_SETUP
-#line 200 "scanner.l"
+#line 199 "scanner.l"
 {
   mode = 1 ;
   LIST;
@@ -1203,20 +1203,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 205 "scanner.l"
+#line 204 "scanner.l"
 {
   mode = 0 ;
 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 214 "scanner.l"
+#line 213 "scanner.l"
 LIST;
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 216 "scanner.l"
+#line 215 "scanner.l"
 {
   LIST;
   LIST_FLUSH;
@@ -1225,12 +1225,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 222 "scanner.l"
+#line 221 "scanner.l"
 { LIST; fprintf(stderr, "[ERROR] line %4d:%3d lexical analyzer error %s\n", line_no, col_no - yyleng, yytext); }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 225 "scanner.l"
+#line 224 "scanner.l"
 ECHO;
 	YY_BREAK
 #line 1237 "obj/scanner.c"
@@ -2205,7 +2205,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 225 "scanner.l"
+#line 224 "scanner.l"
 
 
 
@@ -2218,7 +2218,7 @@ void commenteof()
 
 
 struct nodeType* newTokenNode(int Type) {
-    struct nodeType* node = newNode(NODE_TOKEN);//all the node's default type is Node_Token.
+    struct nodeType* node = newNode(Type);//all the node's default type is Node_Token.
     node->tokenType = Type;
     return node;
 }

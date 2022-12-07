@@ -1,15 +1,120 @@
-create a new Scope
-test:44
-Enter a Symbol writeln,scope:0,type:5,dtype:2 
-test:39
-test:45
-test:45
-test:45
-test:39
-test:23
-test:39
-test:23
-test:39
-close a scope
-
-End!
+/NODE_prog
+        /NODE_PROGRAM
+        aa
+        /(
+        /NODE_identifier_list
+                /NODE_identifier_list
+                        /NODE_identifier_list
+                                input
+                        /,
+                        output
+                /,
+                error
+        /)
+        /NODE_declarations
+                /NODE_declarations
+                        /NODE_declarations
+                        /NODE_VAR
+                        /NODE_identifier_list
+                                /NODE_identifier_list
+                                        a
+                                /,
+                                b
+                        /:
+                        /NODE_type
+                                /NODE_standard_type
+                                        /NODE_INTEGER
+                /NODE_VAR
+                /NODE_identifier_list
+                        c
+                /:
+                /NODE_type
+                        /NODE_standard_type
+                                /NODE_REAL
+        /NODE_subprogram_declarations
+                /NODE_subprogram_declarations
+                        /NODE_subprogram_declarations
+                        /NODE_subprogram_declaration
+                                /NODE_subprogram_head
+                                        /NODE_FUNCTION
+                                        tt
+                                        /NODE_arguments
+                                        /:
+                                        /NODE_standard_type
+                                                /NODE_INTEGER
+                                        default:294
+                                /NODE_declarations
+                                /NODE_subprogram_declarations
+                /NODE_subprogram_declaration
+                        /NODE_subprogram_head
+                                /NODE_FUNCTION
+                                bb
+                                /NODE_arguments
+                                        /(
+                                        /NODE_parameter_list
+                                                /NODE_optional_var
+                                                /NODE_identifier_list
+                                                        /NODE_identifier_list
+                                                                a
+                                                        /,
+                                                        b
+                                                /:
+                                                /NODE_type
+                                                        /NODE_standard_type
+                                                                /NODE_REAL
+                                        /)
+                                /:
+                                /NODE_standard_type
+                                        /NODE_INTEGER
+                                default:294
+                        /NODE_declarations
+                                /NODE_declarations
+                                        /NODE_declarations
+                                        /NODE_VAR
+                                        /NODE_identifier_list
+                                                c
+                                        /:
+                                        /NODE_type
+                                                /NODE_standard_type
+                                                        /NODE_INTEGER
+                                /NODE_VAR
+                                /NODE_identifier_list
+                                        d
+                                /:
+                                /NODE_type
+                                        /NODE_ARRAY
+                                        /[
+                                         NODE_num
+                                                 NODE_INTEGERNUM 1
+                                        /..
+                                         NODE_num
+                                                 NODE_INTEGERNUM 2
+                                        /]
+                                        /NODE_OF
+                                        /NODE_type
+                                                /NODE_standard_type
+                                                        /NODE_INTEGER
+                        /NODE_subprogram_declarations
+        /NODE_compound_statement
+                /NODE_PBEGIN
+                /NODE_optional_statements
+                        /NODE_statement_list
+                                /NODE_statement
+                                        /NODE_variable
+                                                a
+                                                /NODE_tail
+                                        /:=
+                                        /NODE_expression
+                                                /NODE_boolexpression
+                                                        /NODE_simple_expressiong
+                                                                /NODE_term
+                                                                        /NODE_factor
+                                                                                 NODE_num
+                                                                                         NODE_INTEGERNUM 3
+                /NODE_END
+                /NODE_END
+create a scope1
+node 44 has child 74 
+Here add new symbol writeln
+node 39 has no child
+line:2 Error: undeclared variable1 aa
