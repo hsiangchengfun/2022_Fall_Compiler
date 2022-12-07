@@ -1,2 +1,2 @@
-obj/scanner.o: obj/scanner.c include/node.h include/symtab.h \
- include/node.h obj/parser.h include/info.h
+obj/scanner.o: obj/scanner.c obj/parser.h include/ast.h include/loc.h \
+ include/info.h

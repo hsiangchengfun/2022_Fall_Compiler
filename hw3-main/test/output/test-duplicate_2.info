@@ -1,0 +1,5 @@
+11:1: missing return value of function bb
+13:8: redefined variable a
+17:1: missing return value of function aaa
+17:1: redefined function aaa
+19:5: type errors on assignment statement

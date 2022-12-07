@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "node.h"
+// #include "node.h"
 #include "parser.h"
 #include "info.h"
 
@@ -105,46 +105,46 @@ Z [zZ]
 %x minusnum
 %%
                              /* v could do something */
-{P}{R}{O}{G}{R}{A}{M}       {yylval.node = newTokenNode(PROGRAM);yylval.node->lineno=line_no; return(PROGRAM);    }
-{V}{A}{R}                   {yylval.node = newTokenNode(VAR);return(VAR);}
-{A}{R}{R}{A}{Y}             {yylval.node = newTokenNode(ARRAY);yylval.node->lineno=line_no; return(ARRAY);}
-{O}{F}                      {yylval.node = newTokenNode(OF);return(OF);}
-{I}{N}{T}{E}{G}{E}{R}       {yylval.node = newTokenNode(INTEGER);yylval.node->lineno=line_no; return(INTEGER);    }
-{R}{E}{A}{L}                {yylval.node = newTokenNode(REAL);yylval.node->lineno=line_no; return(REAL);       }
-{S}{T}{R}{I}{N}{G}          {yylval.node = newTokenNode(STRING);yylval.node->lineno=line_no;return(STRING);     }
-{F}{U}{N}{C}{T}{I}{O}{N}    {yylval.node = newTokenNode(FUNCTION);yylval.node->lineno=line_no; return(FUNCTION);   }
-{P}{R}{O}{C}{E}{D}{U}{R}{E} {yylval.node = newTokenNode(PROCEDURE);yylval.node->lineno=line_no;return(PROCEDURE);  }
-{B}{E}{G}{I}{N}             {yylval.node = newTokenNode(PBEGIN); return(PBEGIN);     }
-{E}{N}{D}                   {yylval.node = newTokenNode(END);yylval.node->lineno=line_no; return(END);        }
-{I}{F}                      {yylval.node = newTokenNode(IF); return(IF);         }
-{T}{H}{E}{N}                {yylval.node = newTokenNode(THEN); return(THEN);       }
-{E}{L}{S}{E}                {yylval.node = newTokenNode(ELSE); return(ELSE);       }
-{W}{H}{I}{L}{E}             {yylval.node = newTokenNode(WHILE);return(WHILE);      }
-{D}{O}                      {yylval.node = newTokenNode(DO); return(DO);         }
-{N}{O}{T}                   {yylval.node = newTokenNode(NOT); return(NOT);        }
-{A}{N}{D}                   {yylval.node = newTokenNode(AND); return(AND);        }
-{O}{R}                      {yylval.node = newTokenNode(OR); return(OR);         }
+{P}{R}{O}{G}{R}{A}{M}       {LOG(KEYWORD); return(PROGRAM);    }
+{V}{A}{R}                   {LOG(KEYWORD); return(VAR);        }
+{A}{R}{R}{A}{Y}             {LOG(KEYWORD); return(ARRAY);      }
+{O}{F}                      {LOG(KEYWORD); return(OF);         }
+{I}{N}{T}{E}{G}{E}{R}       {LOG(KEYWORD); return(INTEGER);    }
+{R}{E}{A}{L}                {LOG(KEYWORD); return(REAL);       }
+{S}{T}{R}{I}{N}{G}          {LOG(KEYWORD); return(STRING);     }
+{F}{U}{N}{C}{T}{I}{O}{N}    {LOG(KEYWORD); return(FUNCTION);   }
+{P}{R}{O}{C}{E}{D}{U}{R}{E} {LOG(KEYWORD); return(PROCEDURE);  }
+{B}{E}{G}{I}{N}             {LOG(KEYWORD); return(PBEGIN);     }
+{E}{N}{D}                   {LOG(KEYWORD); return(END);        }
+{I}{F}                      {LOG(KEYWORD); return(IF);         }
+{T}{H}{E}{N}                {LOG(KEYWORD); return(THEN);       }
+{E}{L}{S}{E}                {LOG(KEYWORD); return(ELSE);       }
+{W}{H}{I}{L}{E}             {LOG(KEYWORD); return(WHILE);      }
+{D}{O}                      {LOG(KEYWORD); return(DO);         }
+{N}{O}{T}                   {LOG(KEYWORD); return(NOT);        }
+{A}{N}{D}                   {LOG(KEYWORD); return(AND);        }
+{O}{R}                      {LOG(KEYWORD); return(OR);         }
 
-"("                         {yylval.node = newTokenNode(LPAREN); return(LPAREN);     }
-")"                         {yylval.node = newTokenNode(RPAREN); return(RPAREN);     }
-";"                         {yylval.node = newTokenNode(SEMICOLON); return(SEMICOLON);  }
-"."                         {yylval.node = newTokenNode(DOT); return(DOT);        }
-","                         {yylval.node = newTokenNode(COMMA); return(COMMA);      }
-":"                         {yylval.node = newTokenNode(COLON); return(COLON);      }
-"["                         {yylval.node = newTokenNode(LBRACE); return(LBRACE);     }
-"]"                         {yylval.node = newTokenNode(RBRACE); return(RBRACE);     }
-".."                        {yylval.node = newTokenNode(DOTDOT); return(DOTDOT);     }
-":="                        {yylval.node = newTokenNode(ASSIGNMENT); return(ASSIGNMENT); }
-"+"                         {yylval.node = newTokenNode(NODE_addop);yylval.node->lineno=line_no;yylval.node->op = NODE_ADDOP; return(ADDOP);      }
-"-"                         {yylval.node = newTokenNode(NODE_addop);yylval.node->lineno=line_no;yylval.node->op = NODE_SUBOP; return(SUBOP);      }
-"*"                         {yylval.node = newTokenNode(NODE_mulop);yylval.node->lineno=line_no;yylval.node->op = NODE_MULOP; return(MULOP);      }
-"/"                         {yylval.node = newTokenNode(NODE_mulop);yylval.node->lineno=line_no;yylval.node->op = NODE_DIVOP; return(DIVOP);      }
-">"                         {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_GTOP; return(GTOP);       }
-"<"                         {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_LTOP; return(LTOP);       }
-"="                         {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_EQOP; return(EQOP);       }
-">="                        {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_GETOP; return(GETOP);      }
-"<="                        {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_LETOP; return(LETOP);      }
-"!="                        {yylval.node = newTokenNode(NODE_relop);yylval.node->lineno=line_no;yylval.node->op = NODE_NEQOP; return(NEQOP);      }
+"("                         { LOG(KEYWORD); return(LPAREN);     }
+")"                         { LOG(KEYWORD); return(RPAREN);     }
+";"                         { LOG(KEYWORD); return(SEMICOLON);  }
+"."                         { LOG(KEYWORD); return(DOT);        }
+","                         { LOG(KEYWORD); return(COMMA);      }
+":"                         { LOG(KEYWORD); return(COLON);      }
+"["                         { LOG(KEYWORD); return(LBRACE);     }
+"]"                         { LOG(KEYWORD); return(RBRACE);     }
+".."                        { LOG(KEYWORD); return(DOTDOT);     }
+":="                        { LOG(KEYWORD); return(ASSIGNMENT); }
+"+"                         { LOG(KEYWORD); return(ADDOP);      }
+"-"                         { LOG(KEYWORD); return(SUBOP);      }
+"*"                         { LOG(KEYWORD); return(MULOP);      }
+"/"                         { LOG(KEYWORD); return(DIVOP);      }
+">"                         { LOG(KEYWORD); return(GTOP);       }
+"<"                         { LOG(KEYWORD); return(LTOP);       }
+"="                         { LOG(KEYWORD); return(EQOP);       }
+">="                        { LOG(KEYWORD); return(GETOP);      }
+"<="                        { LOG(KEYWORD); return(LETOP);      }
+"!="                        { LOG(KEYWORD); return(NEQOP);      }
 
   /* define identifier here */
 
@@ -162,14 +162,14 @@ Z [zZ]
  */
 
   /* define identifier here */
-[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]+         {yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext); return(IDENTIFIER);}
-[a-zA-Z][a-zA-Z0-9]*           {yylval.node=newTokenNode(NODE_IDENTIFIER); yylval.node->nodeType=NODE_IDENTIFIER;yylval.node->lineno=line_no; yylval.node->string=strdup(yytext);return(IDENTIFIER);}
+[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]+         {yylval.text = strdup(yytext); return(IDENTIFIER);}
+[a-zA-Z][a-zA-Z0-9]*           {yylval.text = strdup(yytext);return(IDENTIFIER);}
 
   /* define INTEGERNUM, REALNUMBER, SCIENTIFIC here */
-([0-9]+)                      {yylval.node=newTokenNode(NODE_INTEGERNUM); yylval.node->lineno=line_no; yylval.node->iValue = atoi(yytext);return(INTEGERNUM);}
+([0-9]+)                      {yylval.val = atoi(yytext);return(INTEGERNUM);}
 
-[0-9]+"."[0-9]+             {yylval.node=newTokenNode(NODE_REALNUMBER); yylval.node->lineno=line_no; yylval.node->rValue = atof(yytext);return(REALNUMBER);}
-[0-9]+"."*[0-9]*[Ee][+-]*[0-9]+ {yylval.node=newTokenNode(NODE_SCIENTIFIC); yylval.node->lineno=line_no; yylval.node->sValue = atof(yytext);return(SCIENTIFIC);}
+[0-9]+"."[0-9]+             {yylval.dval = atof(yytext);return(REALNUMBER);}
+[0-9]+"."*[0-9]*[Ee][+-]*[0-9]+ {yylval.text = strdup(yytext);return(SCIENTIFIC);}
 
 
 
@@ -181,15 +181,15 @@ Z [zZ]
    /* ^"//".* */
  
 <INITIAL>"/*"           {LIST;BEGIN COMMENT0;}
-<COMMENT0>"*"[^/\n]     {LIST;BEGIN COMMENT0;}
-<COMMENT0>[^*\n]*            {LIST;BEGIN COMMENT0;}
+<COMMENT0>"*"[^/\n]     {LIST;line_no++; BEGIN COMMENT0;}
+<COMMENT0>[^*\n]*            {LIST;line_no++;BEGIN COMMENT0;}
 <COMMENT0>"*/"          {LIST;BEGIN INITIAL;}
 
 
 
   /* define string constant (LITERALSTR) here */
 
-[\"][^"\n"]*[\"]      {yylval.node = newTokenNode(NODE_LITERALSTR);yylval.node->lineno=line_no;yylval.node->string=strdup(yytext);return(LITERALSTR);} 
+[\"][^"\n"]*[\"]      {return(LITERALSTR);} 
 
 
 
@@ -224,18 +224,7 @@ Z [zZ]
 
 
 
-void commenteof()
-{
- fprintf (stderr, "unexpected EOF inside comment at line %d\n", line_no);
- exit (1);
-}
 
-
-struct nodeType* newTokenNode(int Type) {
-    struct nodeType* node = newNode(Type);//all the node's default type is Node_Token.
-    node->tokenType = Type;
-    return node;
-}
 
 
 

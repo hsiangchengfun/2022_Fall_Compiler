@@ -110,7 +110,9 @@ void semanticCheck(struct nodeType *node) {
     // printf("test:%d at\n", node->nodeType,node->lineno);
     if(node->child!=NULL)printf("node %d has child %d \n",node->nodeType ,node->child->nodeType);
     else printf("node %d has no child\n",node->nodeType);
+    printf("\nis %d\n",node->nodeType);
     switch(node->nodeType) {
+        
         case NODE_prog:{
             // printf("Node progggggg\n");
             struct SymTableEntry entry;
@@ -131,6 +133,7 @@ void semanticCheck(struct nodeType *node) {
                 semanticCheck(child);
                 child=nthChild(1,child);
             }
+            if(child->child == NULL)printf("no child\n");
 
             child=nthChild(2,node);
             semanticCheck(child);

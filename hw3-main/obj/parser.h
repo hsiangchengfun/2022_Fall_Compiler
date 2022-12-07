@@ -43,6 +43,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 63 "parser.y"
+
+    #include "ast.h"
+
+#line 52 "obj/parser.h"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -50,50 +56,49 @@ extern int yydebug;
   enum yytokentype
   {
     PROGRAM = 258,
-    ELSE = 259,
-    WHILE = 260,
-    DO = 261,
-    THEN = 262,
-    IF = 263,
-    OF = 264,
+    VAR = 259,
+    ARRAY = 260,
+    OF = 261,
+    INTEGER = 262,
+    REAL = 263,
+    STRING = 264,
     FUNCTION = 265,
     PROCEDURE = 266,
-    END = 267,
-    ARRAY = 268,
-    VAR = 269,
-    NOT = 270,
-    STRING = 271,
-    ASSIGNMENT = 272,
-    COLON = 273,
-    COMMA = 274,
-    INTEGER = 275,
-    AND = 276,
-    OR = 277,
-    DOT = 278,
-    DOTDOT = 279,
-    GETOP = 280,
-    GTOP = 281,
-    LBRACE = 282,
-    LETOP = 283,
-    LPAREN = 284,
-    LTOP = 285,
-    ADDOP = 286,
-    MULOP = 287,
-    DIVOP = 288,
-    EQOP = 289,
-    NEQOP = 290,
-    RBRACE = 291,
-    REAL = 292,
-    RPAREN = 293,
-    SEMICOLON = 294,
-    PBEGIN = 295,
-    SUBOP = 296,
-    NODE_TOKEN = 297,
-    INTEGERNUM = 298,
-    REALNUMBER = 299,
+    PBEGIN = 267,
+    END = 268,
+    IF = 269,
+    THEN = 270,
+    ELSE = 271,
+    WHILE = 272,
+    DO = 273,
+    NOT = 274,
+    AND = 275,
+    OR = 276,
+    LPAREN = 277,
+    RPAREN = 278,
+    SEMICOLON = 279,
+    DOT = 280,
+    COMMA = 281,
+    COLON = 282,
+    LBRACE = 283,
+    RBRACE = 284,
+    DOTDOT = 285,
+    ASSIGNMENT = 286,
+    ADDOP = 287,
+    SUBOP = 288,
+    MULOP = 289,
+    DIVOP = 290,
+    LTOP = 291,
+    GTOP = 292,
+    EQOP = 293,
+    GETOP = 294,
+    LETOP = 295,
+    NEQOP = 296,
+    IDENTIFIER = 297,
+    REALNUMBER = 298,
+    INTEGERNUM = 299,
     SCIENTIFIC = 300,
-    IDENTIFIER = 301,
-    LITERALSTR = 302
+    LITERALSTR = 301
   };
 #endif
 
@@ -101,16 +106,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 61 "parser.y"
+#line 67 "parser.y"
 
-  int val;
-  char* text;
-  double dval;
-  double sval;
-  struct nodeType *node;
-  char* string;
+    int val;
+    char* text;
+    double dval;
+    Node* node;
 
-#line 114 "obj/parser.h"
+#line 117 "obj/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
