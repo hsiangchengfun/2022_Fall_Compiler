@@ -7,34 +7,8 @@
 #include "ast.h"
 #include "error.h"
 #include "loc.h"
-// #include "lib.h"
-#include "addnode.h"
-#include "argumentsnode.h"
-#include "boolexpnode.h"
-#include "compoundstatementnode.h"
-#include "declarnode.h"
-#include "explistnode.h"
-#include "expnode.h"
-#include "factornode.h"
-#include "identlistnode.h"
-#include "mulnode.h"
-#include "optionalstatementsnode.h"
-#include "optionalvarnode.h"
-#include "parameterlistnode.h"
-#include "procedstatementnode.h"
-#include "prognode.h"
-#include "relopnode.h"
-#include "simpleexpnode.h"
-#include "standtypenode.h"
-#include "statementlistnode.h"
-#include "statementnode.h"
-#include "subdeclarnode.h"
-#include "subheadnode.h"
-#include "tailnode.h"
-#include "termnode.h"
-#include "typenode.h"
-#include "varnode.h"
-#include "numnode.h"
+#include "lib.h"
+
 
 #define YYLTYPE LocType
 #define MAX_LINE_LENG      256
@@ -249,20 +223,20 @@ tail: LBRACE expression RBRACE tail {
     ;
 
 procedure_statement: IDENTIFIER { 
-                      $$ = newProcedStatementNode( @1.first_line, @1.first_column, $1, NULL, @1.first_line, @1.first_column ); 
+                      $$ = newProcedureStatementNode( @1.first_line, @1.first_column, $1, NULL, @1.first_line, @1.first_column ); 
                       }
                     | IDENTIFIER LPAREN expression_list RPAREN {  
-                        $$ = newProcedStatementNode( @1.first_line, @1.first_column, $1, $3, @4.first_line, @4.first_column ); 
+                        $$ = newProcedureStatementNode( @1.first_line, @1.first_column, $1, $3, @4.first_line, @4.first_column ); 
                         
                         }
     ;
 
 expression_list: expression { 
-                      $$ = newExpListNode( @1.first_line, @1.first_column, NULL, $1, @1.first_line, @1.first_column ); 
+                      $$ = newExpressionListNode( @1.first_line, @1.first_column, NULL, $1, @1.first_line, @1.first_column ); 
                       
                       }
                 | expression_list COMMA expression { 
-                      $$ = newExpListNode( @1.first_line, @1.first_column, $1, $3, @3.first_line, @3.first_column ); 
+                      $$ = newExpressionListNode( @1.first_line, @1.first_column, $1, $3, @3.first_line, @3.first_column ); 
                       
                       }
     ;
@@ -287,10 +261,10 @@ boolexpression: simple_expression {
     ;
 
 simple_expression: term { 
-                    $$ = newSimpleExpNode( @1.first_line, @1.first_column, NULL, NULL, $1, @1.first_line, @1.first_column ); 
+                    $$ = newSimpleExpressionNode( @1.first_line, @1.first_column, NULL, NULL, $1, @1.first_line, @1.first_column ); 
                     }
                   | simple_expression addop term { 
-                    $$ = newSimpleExpNode( @1.first_line, @1.first_column, $1, $2, $3, @3.first_line, @3.first_column ); 
+                    $$ = newSimpleExpressionNode( @1.first_line, @1.first_column, $1, $2, $3, @3.first_line, @3.first_column ); 
                     }
     ;
 
@@ -327,10 +301,10 @@ factor: IDENTIFIER tail {
     ;
 
 addop: ADDOP {  
-                  $$ = newAddNode( @1.first_line, @1.first_column, 1, @1.first_line, @1.first_column ); 
+                  $$ = newAddOpNode( @1.first_line, @1.first_column, 1, @1.first_line, @1.first_column ); 
                   }
       | SUBOP { 
-                  $$ = newAddNode( @1.first_line, @1.first_column, 0, @1.first_line, @1.first_column ); 
+                  $$ = newAddOpNode( @1.first_line, @1.first_column, 0, @1.first_line, @1.first_column ); 
                   }
     ;
 

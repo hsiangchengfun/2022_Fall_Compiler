@@ -1,4 +1,3 @@
-obj/parameterlistnode.o: lib/parameterlistnode.c \
- include/parameterlistnode.h include/ast.h include/loc.h \
- include/optionalvarnode.h include/identlistnode.h include/typenode.h \
- include/standtypenode.h
+obj/Parameterlistnode.o: lib/Parameterlistnode.c include/Parameterlist.h \
+ include/ast.h include/loc.h include/Optionalvar.h \
+ include/Identifierlist.h include/Type.h include/Standardtype.h

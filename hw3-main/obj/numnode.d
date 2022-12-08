@@ -1,2 +1,1 @@
-obj/numnode.o: lib/numnode.c include/numnode.h include/ast.h \
- include/loc.h
+obj/Numnode.o: lib/Numnode.c include/Num.h include/ast.h include/loc.h

@@ -1,2 +1,2 @@
-obj/addnode.o: lib/addnode.c include/addnode.h include/ast.h \
- include/loc.h
+obj/Addnode.o: lib/Addnode.c include/Addnode.h include/ast.h \
+ include/loc.h include/ast.h

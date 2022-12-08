@@ -1,4 +1,5 @@
 #include <string.h>
+#include "stdlib.h"
 
 #include "list.h"
 
@@ -13,44 +14,44 @@ void list_push_back(list* root, list* next){
 }
 
 list* newdatalist(char* id, int scope, returnType type, dataType nodetype){
-    list* temp = (list*) malloc ( sizeof(list) );
-    temp->data = (symbolobj*) malloc ( sizeof(symbolobj) );
-    temp->id = id;
-    temp->scope = scope;
-    temp->nodeType = nodetype;
-    temp->data->type = type;
-    temp->next = NULL;
-    temp->prev = NULL;
+    list* tmpnode = (list*) malloc ( sizeof(list) );
+    tmpnode->data = (symbolobj*) malloc ( sizeof(symbolobj) );
+    tmpnode->id = id;
+    tmpnode->scope = scope;
+    tmpnode->nodeType = nodetype;
+    tmpnode->data->type = type;
+    tmpnode->next = NULL;
+    tmpnode->prev = NULL;
 
-    return temp;
+    return tmpnode;
 }
 
 list* newarraylist(char* id, int scope, returnType type, dataType nodetype){
-    list* temp = (list*) malloc ( sizeof(list) );
-    temp->data = (symbolobj*) malloc ( sizeof(arraysymbolobj) );
-    temp->id = id;
-    temp->scope = scope;
-    temp->nodeType = nodetype;
-    temp->data->type = type;
-    temp->next = NULL;
-    temp->prev = NULL;
+    list* tmpnode = (list*) malloc ( sizeof(list) );
+    tmpnode->data = (symbolobj*) malloc ( sizeof(arraysymbolobj) );
+    tmpnode->id = id;
+    tmpnode->scope = scope;
+    tmpnode->nodeType = nodetype;
+    tmpnode->data->type = type;
+    tmpnode->next = NULL;
+    tmpnode->prev = NULL;
 
-    return temp;
+    return tmpnode;
 }
 
 list* newfunclist( char* id, int scope, returnType type, dataType nodetype ){
-    list* temp = (list*) malloc ( sizeof(list) );
-    temp->data = (symbolobj*) malloc ( sizeof(funcsymbolobj) );
-    temp->data->type = type;
-    ((funcsymbolobj*)temp->data)->passInType = NULL;
-    ((funcsymbolobj*)temp->data)->check = 0;
-    temp->id = id;
-    temp->scope = scope;
-    temp->nodeType = nodetype;
-    temp->next = NULL;
-    temp->prev = NULL;
+    list* tmpnode = (list*) malloc ( sizeof(list) );
+    tmpnode->data = (symbolobj*) malloc ( sizeof(funcsymbolobj) );
+    tmpnode->data->type = type;
+    ((funcsymbolobj*)tmpnode->data)->passInType = NULL;
+    ((funcsymbolobj*)tmpnode->data)->check = 0;
+    tmpnode->id = id;
+    tmpnode->scope = scope;
+    tmpnode->nodeType = nodetype;
+    tmpnode->next = NULL;
+    tmpnode->prev = NULL;
 
-    return temp;
+    return tmpnode;
 }
 
 void list_printTable(list* root){
@@ -64,15 +65,15 @@ void list_printTable(list* root){
             char dataCurr[40] = { };
             if ( curr->nodeType == Data ){
                 // data
-                symbolobj* temp = curr->data;
-                while(temp->type == Array){
+                symbolobj* tmpnode = curr->data;
+                while(tmpnode->type == Array){
                     strcpy( dataCurr, dataTemp );
-                    sprintf(dataTemp, "[%d~%d]%s", ((arraysymbolobj*)temp)->start, ((arraysymbolobj*)temp)->end, dataCurr);
-                    temp = ((arraysymbolobj*)temp)->data;
+                    sprintf(dataTemp, "[%d~%d]%s", ((arraysymbolobj*)tmpnode)->start, ((arraysymbolobj*)tmpnode)->end, dataCurr);
+                    tmpnode = ((arraysymbolobj*)tmpnode)->data;
                 }
 
                 strcpy( dataCurr, dataTemp );
-                switch (temp->type)
+                switch (tmpnode->type)
                 {
                 case Void:
                     sprintf(dataTemp, "void%s", dataCurr);
@@ -96,25 +97,25 @@ void list_printTable(list* root){
                 fprintf(stdout, SYMTAB_ENTRY_FMT, curr->id, curr->scope, dataTemp);
             }else{
                 // function or procedure
-                symbolobj* temp = curr->data;
+                symbolobj* tmpnode = curr->data;
 
                 int counter = 0;
                 // check pass in data type
-                passinobj* tempPassInType = ((funcsymbolobj*)curr->data)->passInType;
-                while (tempPassInType != NULL){
+                passinobj* tmpnodePassInType = ((funcsymbolobj*)curr->data)->passInType;
+                while (tmpnodePassInType != NULL){
                     // check type
                     
                     char ArrayTemp[40] = { };
                     char ArrayCurr[40] = { };
-                    symbolobj* tempArray = tempPassInType->data;
-                    while(tempArray->type == Array){
+                    symbolobj* tmpnodeArray = tmpnodePassInType->data;
+                    while(tmpnodeArray->type == Array){
                         strcpy( ArrayCurr, ArrayTemp );
-                        sprintf(ArrayTemp, "[%d~%d]%s", ((arraysymbolobj*)tempArray)->start, ((arraysymbolobj*)tempArray)->end, ArrayCurr);
-                        tempArray = ((arraysymbolobj*)tempArray)->data;
+                        sprintf(ArrayTemp, "[%d~%d]%s", ((arraysymbolobj*)tmpnodeArray)->start, ((arraysymbolobj*)tmpnodeArray)->end, ArrayCurr);
+                        tmpnodeArray = ((arraysymbolobj*)tmpnodeArray)->data;
                     }
 
                     strcpy( ArrayCurr, ArrayTemp );
-                    switch (tempArray->type)
+                    switch (tmpnodeArray->type)
                     {
                     case Void:
                         sprintf(ArrayTemp, "void%s", ArrayCurr);
@@ -141,13 +142,13 @@ void list_printTable(list* root){
                     else
                         sprintf(dataTemp, "%s", ArrayTemp);
 
-                    tempPassInType = tempPassInType->next;
+                    tmpnodePassInType = tmpnodePassInType->next;
                     counter++;
                 }
 
                 // check return data type
                 strcpy( dataCurr, dataTemp );
-                switch (temp->type)
+                switch (tmpnode->type)
                 {
                 case Void:
                     if (!strcmp(dataCurr, ""))
@@ -218,14 +219,14 @@ void listRemove( list* listRoot, int scope ){
     return;
 }
 
-int GetList( list* root, list** temp, char* id ){
+int GetList( list* root, list** tmpnode, char* id ){
     list* curr = root;
     if (curr != NULL)
         while(curr->next != 0)
             curr = curr->next;
     while (curr != NULL){
         if ( !strcmp(curr->id, id) ){
-            *temp = curr;
+            *tmpnode = curr;
             return 1;
         }
         curr = curr->prev;

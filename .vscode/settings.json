@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "argumentsnode.h": "c",
+        "info.h": "c",
+        "stdlib.h": "c",
+        "statementnode.h": "c",
+        "list.h": "c",
+        "expressionnode.h": "c",
+        "arguments.h": "c",
+        "boolexpression.h": "c",
+        "compoundstatement.h": "c",
+        "lib.h": "c",
+        "declaration.h": "c",
+        "expression.h": "c",
+        "expressionlist.h": "c",
+        "parameterlist.h": "c",
+        "simpleexpression.h": "c",
+        "optionalvar.h": "c",
+        "procedurestatement.h": "c",
+        "standardtype.h": "c",
+        "statementlist.h": "c",
+        "subprogramdeclaration.h": "c"
+    }
+}

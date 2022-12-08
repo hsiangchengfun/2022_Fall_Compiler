@@ -1,5 +1,5 @@
-obj/factornode.o: lib/factornode.c include/factornode.h include/ast.h \
- include/loc.h include/tailnode.h include/expnode.h include/boolexpnode.h \
- include/simpleexpnode.h include/Addnode.h include/termnode.h \
- include/factornode.h include/mulnode.h include/relopnode.h \
- include/explistnode.h include/numnode.h include/list.h include/info.h
+obj/Factornode.o: lib/Factornode.c include/Factor.h include/ast.h \
+ include/loc.h include/Tail.h include/Expression.h \
+ include/Boolexpression.h include/Simpleexpression.h include/Addop.h \
+ include/Term.h include/Factor.h include/Mulop.h include/Relop.h \
+ include/Expressionlist.h include/Num.h include/list.h include/info.h

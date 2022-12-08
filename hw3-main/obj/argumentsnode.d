@@ -1,4 +1,4 @@
-obj/argumentsnode.o: lib/argumentsnode.c include/argumentsnode.h \
- include/ast.h include/loc.h include/parameterlistnode.h \
- include/optionalvarnode.h include/identlistnode.h include/typenode.h \
- include/standtypenode.h
+obj/Argumentsnode.o: lib/Argumentsnode.c include/Arguments.h \
+ include/ast.h include/loc.h include/Parameterlist.h \
+ include/Optionalvar.h include/Identifierlist.h include/Type.h \
+ include/Standardtype.h

@@ -1,9 +1,8 @@
-obj/compoundstatementnode.o: lib/compoundstatementnode.c \
- include/compoundstatementnode.h include/ast.h include/loc.h \
- include/optionalstatementsnode.h include/statementlistnode.h \
- include/statementnode.h include/varnode.h include/tailnode.h \
- include/expnode.h include/boolexpnode.h include/simpleexpnode.h \
- include/Addnode.h include/termnode.h include/factornode.h \
- include/explistnode.h include/numnode.h include/mulnode.h \
- include/relopnode.h include/procedstatementnode.h \
- include/compoundstatementnode.h include/list.h include/info.h
+obj/Compoundstatementnode.o: lib/Compoundstatementnode.c \
+ include/Compoundstatement.h include/ast.h include/loc.h \
+ include/Optionalstatements.h include/Statementlist.h include/Statement.h \
+ include/Var.h include/Tail.h include/Expression.h \
+ include/Boolexpression.h include/Simpleexpression.h include/Addop.h \
+ include/Term.h include/Factor.h include/Expressionlist.h include/Num.h \
+ include/Mulop.h include/Relop.h include/Procedurestatement.h \
+ include/Compoundstatement.h include/list.h include/info.h

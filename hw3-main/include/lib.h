@@ -1,48 +1,65 @@
-#ifndef _LIB_H
-#define _LIB_H
+#ifndef __LIB_H__
+#define __LIB_H__
 
-
+#include "stdbool.h"
+#include "stdlib.h"
 #include "ast.h"
-// #include "addnode.h"
-#include "argumentsnode.h"
-#include "boolexpnode.h"
-#include "compoundstatementnode.h"
-#include "declarnode.h"
-#include "explistnode.h"
-#include "expnode.h"
-#include "factornode.h"
-#include "identlistnode.h"
-#include "mulnode.h"
-#include "optionalstatementsnode.h"
-#include "optionalvarnode.h"
-#include "parameterlistnode.h"
-#include "procedstatementnode.h"
-#include "prognode.h"
-#include "relopnode.h"
-#include "simpleexpnode.h"
-#include "standtypenode.h"
-#include "statementlistnode.h"
-#include "statementnode.h"
-#include "subdeclarnode.h"
-#include "subheadnode.h"
-#include "tailnode.h"
-#include "termnode.h"
-#include "typenode.h"
-#include "varnode.h"
-#include "numnode.h"
+#include "lib.h"
 
-//========================
-typedef struct addnode{
+
+
+
+
+typedef struct parameterlistnode ParameterListNode;
+typedef struct procedurestatementnode ProcedureStatementNode;
+typedef struct typenode TypeNode;
+typedef struct simpleexpressionnode SimpleExpressionNode;
+typedef struct Boolexpressionnode BoolExpNode;
+typedef struct tailnode TailNode;
+typedef struct factornode FactorNode;
+typedef struct numnode NumNode;
+typedef struct expressionlistnode ExpressionListNode;
+typedef struct expressionnode ExpressionNode;
+typedef struct declarnode DeclarNode;
+typedef struct Boolexpressionnode BoolExpNode;
+typedef struct argumentsnode ArgumentsNode;
+typedef struct addopnode AddOpNode;
+typedef struct relopnode RelopNode;
+typedef struct identlistnode IdentListNode;
+typedef struct termnode TermNode;
+typedef struct standtypenode StandTypeNode;
+typedef struct compoundstatementnode CompoundStatementNode;
+typedef struct varnode VarNode;
+typedef struct statementnode StatementNode;
+typedef struct subheadnode SubHeadNode;
+typedef struct statementlistnode StatementListNode;
+typedef struct subdeclarnode SubDeclarNode;
+typedef struct subheadnode SubHeadNode;
+typedef struct optionalstatementsnode OptionalStatementSNode;
+typedef struct MulNode MulNode;
+typedef struct statementlistnode StatementlistNode;
+typedef struct prognode ProgNode;
+typedef struct subdeclarsnode SubDeclarSNode;
+
+
+
+
+typedef struct addopnode{
     Node node;
-    int positive;   // 1: positive, 0: negative
+    bool add;   
     
-} AddNode;
+} AddOpNode;
 
-Node* newAddNode( int, int, int, int, int );
+Node* newAddOpNode( int, int, bool, int, int );
 
-void* AddNode_visit(void*);
+void* AddOpNode_visit(void*);
 
-//==============================
+
+
+//argument
+
+
+
 
 
 
@@ -57,24 +74,25 @@ Node* newArgumentsNode( int, int, ParameterListNode*, int, int );
 void* ArgumentsNode_visit(void*);
 
 
-//===============
-typedef struct simpleexpnode SimpleExpNode;
+//bool exp
 
-typedef struct boolexpnode{
+
+
+typedef struct Boolexpressionnode{
     Node node;
-    SimpleExpNode* first;
+    SimpleExpressionNode* first;
     RelopNode* relop;
-    SimpleExpNode* least;
+    SimpleExpressionNode* least;
 
 } BoolExpNode;
 
-Node* newBoolExpNode( int, int, SimpleExpNode*, RelopNode*, SimpleExpNode*, int, int );
+Node* newBoolExpNode( int, int, SimpleExpressionNode*, RelopNode*, SimpleExpressionNode*, int, int );
 
 void* BoolExpNode_visit(void*);
-//================
 
 
-typedef struct optionalstatementsnode OptionalStatementSNode;
+//compoundstatement
+
 
 typedef struct compoundstatementnode{
     Node node;
@@ -85,11 +103,13 @@ typedef struct compoundstatementnode{
 void* CompoundStatementNode_visit(void*);
 
 Node* newCompoundStatementNode( int, int, OptionalStatementSNode*, int, int );
-//===================
 
+
+
+//DFeacalartion
 // #include "ast.h"
-// #include "typenode.h"
-// #include "identlistnode.h"
+
+
 
 typedef struct declarnode{
     Node node;
@@ -103,79 +123,43 @@ Node* newDeclarNode( int, int, DeclarNode*, IdentListNode*, TypeNode*, int, int 
 
 void* DeclarNode_visit(void*);
 
-//===================
-
-// #include "ast.h"
-// #include "expnode.h"
-
-typedef struct expnode ExpNode;
-
-typedef struct explistnode{
-    Node node;
-    struct explistnode* explistnode;
-    ExpNode* expnode;
-
-} ExpListNode;
-
-Node* newExpListNode( int, int, ExpListNode*, ExpNode*, int, int );
-
-void* ExpListNode_visit(void*);
-
-
-//===================
 
 
 
-// #include "ast.h"
-// #include "boolexpnode.h"
+//expss
 
-typedef struct boolexpnode BoolExpNode;
 
-typedef struct expnode{
+
+typedef struct expressionnode{
     Node node;
     int type;   // 0: bool, 1: bool AND bool, 2: bool OR bool
     BoolExpNode* first;
     BoolExpNode* least;
     
-} ExpNode;
+} ExpressionNode;
 
-Node* newExpNode( int, int, ExpNode*, int, ExpNode*, int, int );
+Node* newExpNode( int, int, ExpressionNode*, int, ExpressionNode*, int, int );
 
 void* ExpNode_visit(void*);
 
+//explist
 
-//===================
 
-// #include "ast.h"
-// #include "tailnode.h"
-// #include "explistnode.h"
-// #include "expnode.h"
-// #include "numnode.h"
 
-typedef struct tailnode TailNode;
-typedef struct explistnode ExpListNode;
-typedef struct expnode ExpNode;
-
-typedef struct factornode{
+typedef struct expressionlistnode{
     Node node;
-    int type;
-    char* id;
-    TailNode* tailnode;
-    ExpListNode* explistnode;
-    NumNode* num;
-    ExpNode* expnode;
-    struct factornode* factornode;
-    
-} FactorNode;
+    struct expressionlistnode* expressionlistnode;
+    ExpressionNode* expressionnode;
 
-Node* newFactorNode( int, int, int, char*, TailNode*, ExpListNode*, NumNode*, ExpNode*, FactorNode*, int, int );
+} ExpressionListNode;
 
-void* FactorNode_visit(void*);
+Node* newExpressionListNode( int, int, ExpressionListNode*, ExpressionNode*, int, int );
 
-//===================
+void* ExpressionListNode_visit(void*);
 
 
 
+//identifier
 typedef struct identlistnode{
     Node node;
     char* id;
@@ -189,71 +173,7 @@ void* IdentListNode_visit(void*);
 
 
 
-//===================
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "info.h"
-
-typedef enum{ Int, Void, Real, String, Array } returnType;
-
-typedef enum{ Function, Data } dataType;
-
-typedef struct SymbolObj{
-    returnType type;
-} symbolobj;
-
-typedef struct ArraySymbolObj{
-    returnType type;
-    symbolobj* data;
-    int start;
-    int end;
-} arraysymbolobj;
-
-typedef struct PassInObj{
-    symbolobj* data;
-    symbolobj* next;
-} passinobj;
-
-typedef struct FuncSymbolObj{
-    returnType type;
-    symbolobj* passInType;
-    int check;
-} funcsymbolobj;
-
-typedef struct List{
-    dataType nodeType;
-    char* id;
-    int scope;
-    symbolobj* data;
-    struct List* next;
-    struct List* prev;
-} list;
-
-void list_push_back( list*, list* );
-
-list* newdatalist( char*, int, returnType, dataType );
-
-list* newarraylist( char*, int, returnType, dataType );
-
-list* newfunclist( char*, int, returnType, dataType );
-
-void list_printTable( list* );
-
-int checkList( list*, char*, int, dataType );
-
-void listRemove( list*, int );
-
-int GetList( list* , list**, char* );
-
-
-
-
-//===================
-
-
+//mulop
 
 typedef struct MulNode{
     Node node;
@@ -265,10 +185,8 @@ Node* newMulNode( int, int, int, int, int );
 
 void* MulNode_visit(void*);
 
-//===================
 
-
-
+//num
 typedef struct numnode{
     Node node;
     int type;
@@ -281,27 +199,56 @@ Node* newNumNode( int, int, int, double, char*, int, int );
 
 void* NumNode_visit(void*);
 
-//===================
 
-// #include "statementlistnode.h"
 
-typedef struct statementlistnode StatementlistNode;
+//factor
 
+
+// #include "Expressionlist.h"
+// #include "Expression.h"
+// #include "Num.h"
+
+
+
+
+typedef struct factornode{
+    Node node;
+    int type;
+    char* id;
+    TailNode* tailnode;
+    ExpressionListNode* expressionlistnode;
+    NumNode* num;
+    ExpressionNode* expressionnode;
+    struct factornode* factornode;
+    
+} FactorNode;
+
+Node* newFactorNode( int, int, int, char*, TailNode*, ExpressionListNode*, NumNode*, ExpressionNode*, FactorNode*, int, int );
+
+void* FactorNode_visit(void*);
+
+//identifierlist
+
+
+
+//Mulop
+
+
+//opt stt
 typedef struct optionalstatementsnode{
     Node node;
-    StatementlistNode* statementlistnode;
+    StatementListNode* statementlistnode;
 
 } OptionalStatementSNode;
 
-Node* newOptionalStatementSNode( int, int, StatementlistNode*, int, int );
+Node* newOptionalStatementSNode( int, int, StatementListNode*, int, int );
 
 void* OptionalStatementSNode_visit(void*);
 
 
-//===================
 
 
-
+//opt var
 typedef struct optionalvarnode{
     Node node;
     
@@ -311,12 +258,8 @@ void* OptionalVarNode_visit(void*);
 
 Node* newOptionalVarNode( int, int );
 
+//paralist
 
-//===================
-
-// #include "optionalvarnode.h"
-// #include "identlistnode.h"
-// #include "typenode.h"
 
 typedef struct parameterlistnode{
     Node node;
@@ -332,30 +275,22 @@ Node* newParameterListNode( int, int, OptionalVarNode*, IdentListNode*, TypeNode
 void* ParameterListNode_visit(void*);
 
 
-//===================
 
-
-// #include "explistnode.h"
-
-typedef struct procedstatementnode{
+//procedure
+typedef struct procedurestatementnode{
     Node node;
     char* id;
-    ExpListNode* explistnode;
+    ExpressionListNode* expressionlistnode;
 
-} ProcedStatementNode;
+} ProcedureStatementNode;
 
-Node* newProcedStatementNode( int, int, char*, ExpListNode*, int, int );
+Node* newProcedureStatementNode( int, int, char*, ExpressionListNode*, int, int );
 
-void* ProcedStatementNode_visit(void*);
-
-//===================
+void* ProcedureStatementNode_visit(void*);
 
 
-// #include "identlistnode.h"
-// #include "declarnode.h"
-// #include "subdeclarnode.h"
-// #include "compoundstatementnode.h"
 
+//prog
 Node* newProgNode( int firstLine, int firstColumn, char* id, IdentListNode* identlist, DeclarNode* declars, SubDeclarSNode* subdeclars, CompoundStatementNode* compoundstatement, int lastLine, int lastColumn );
 
 void* ProgNode_visit();
@@ -370,8 +305,9 @@ typedef struct prognode{
 
 } ProgNode;
 
-//===================
 
+
+//relop
 typedef struct relopnode{
     Node node;
     int type;
@@ -383,32 +319,26 @@ Node* newRelopNode( int, int, int, int, int );
 void* RelopNode_visit(void*);
 
 
-//===================
 
-// #include "simpleexpnode.h"
-// #include "Addnode.h"
-// #include "termnode.h"
+//simple exp
 
-typedef struct termnode TermNode;
-typedef struct simpleexpnode SimpleExpNode;
-// typedef struct addnode AddNode;
 
-typedef struct simpleexpnode{
+
+
+typedef struct simpleexpressionnode{
     Node node;
     TermNode* termnode;
-    SimpleExpNode* simpleexpnode;
-    AddNode* addnode;
+    SimpleExpressionNode* simpleexpressionnode;
+    AddOpNode* addnode;
 
-} SimpleExpNode;
+} SimpleExpressionNode;
 
-Node* newSimpleExpNode( int, int, SimpleExpNode*, AddNode*, TermNode*, int, int );
+Node* newSimpleExpressionNode( int, int, SimpleExpressionNode*, AddOpNode*, TermNode*, int, int );
 
-void* SimpleExpNode_visit(void*);
-
-
-//===================
+void* SimpleExpressionNode_visit(void*);
 
 
+//stdtyupe
 typedef struct standtypenode{
     Node node;
     int type; // 0: integer, 1: real, 2: string
@@ -418,11 +348,27 @@ void* StandTypeNode_visit(void*);
 
 Node* newStandTypeNode( int, int, int, int, int );
 
-//===================
 
-// #include "statementnode.h"
 
-typedef struct statementnode StatementNode;
+//sttmnt
+typedef struct statementnode{
+    Node node;
+    int type;
+    VarNode* varnode;
+    ExpressionNode* expressionnode;
+    ProcedureStatementNode* procedurestatementnode;
+    CompoundStatementNode* compoundstatementnode;
+    struct statementnode* statementnode1;
+    struct statementnode* statementnode2;
+
+} StatementNode;
+
+Node* newStatementNode( int, int, int, VarNode*, ExpressionNode*, ProcedureStatementNode*, CompoundStatementNode*, StatementNode*, StatementNode*, int, int );
+
+void* StatementNode_visit(void*);
+
+
+//sttmnt list
 
 typedef struct statementlistnode{
     Node node;
@@ -436,40 +382,10 @@ Node* newStatementListNode( int, int, struct statementlistnode*, StatementNode*,
 void* StatementListNode_visit(void*);
 
 
-//===================
 
 
-// #include "varnode.h"
-// #include "expnode.h"
-// #include "procedstatementnode.h"
-// #include "compoundstatementnode.h"
+//subprogdecla
 
-typedef struct compoundstatementnode CompoundStatementNode;
-
-typedef struct statementnode{
-    Node node;
-    int type;
-    VarNode* varnode;
-    ExpNode* expnode;
-    ProcedStatementNode* procedstatementnode;
-    CompoundStatementNode* compoundstatementnode;
-    struct statementnode* statementnode1;
-    struct statementnode* statementnode2;
-
-} StatementNode;
-
-Node* newStatementNode( int, int, int, VarNode*, ExpNode*, ProcedStatementNode*, CompoundStatementNode*, StatementNode*, StatementNode*, int, int );
-
-void* StatementNode_visit(void*);
-
-
-//===================
-
-// #include "subheadnode.h"
-// #include "declarnode.h"
-// #include "compoundstatementnode.h"
-
-struct subdeclarnode;
 
 typedef struct subdeclarsnode{
     Node node;
@@ -498,11 +414,8 @@ Node* newSubDeclarSNode( int, int, SubDeclarSNode*, SubDeclarNode*, int, int );
 int checkExist( StatementNode*, char* );
 
 
-//===================
 
-// #include "standtypenode.h"
-// #include "argumentsnode.h"
-
+//subproghead
 typedef struct subheadnode{
     Node node;
     int type;   // 0: FUNCTION, 1: PROCEDURE
@@ -517,27 +430,24 @@ void* SubHeadNode_visit(void*);
 Node* newSubHeadNode( int, int, int, char*, StandTypeNode*, ArgumentsNode*, int, int );
 
 
-//===================
 
-// #include "expnode.h"
-// #include "tailnode.h"
+//tail
 
-typedef struct expnode ExpNode;
 
 typedef struct tailnode{
     Node node;
-    ExpNode* expnode;
+    ExpressionNode* expressionnode;
     struct tailnode* tailnode;
     
 } TailNode;
 
-Node* newTailNode( int, int, ExpNode*, TailNode*, int, int );
+Node* newTailNode( int, int, ExpressionNode*, TailNode*, int, int );
 
 void* TailNode_visit(void*);
 
 
-//===================
-typedef struct factornode FactorNode;
+
+//term
 
 typedef struct termnode{
     Node node;
@@ -551,7 +461,10 @@ Node* newTermNode( int, int, TermNode*, MulNode*, FactorNode*, int, int );
 
 void* TermNode_visit(void*);
 
-//===================
+
+
+//type
+
 typedef struct typenode{
     Node node;
     StandTypeNode* standtypenode;
@@ -565,7 +478,11 @@ void* TypeNode_visit(void*);
 
 Node* newTypeNode( int, int, StandTypeNode*, int, int, TypeNode*, int, int );
 
-//===================
+
+
+
+
+//var
 typedef struct varnode{
     Node node;
     char* id;
@@ -577,31 +494,12 @@ Node* newVarNode( int, int, char*, TailNode*, int, int );
 
 void* VarNode_visit(void*);
 
-//===================
 
 
-//===================
 
 
-//===================
 
 
-//===================
-
-
-//===================
-
-
-//===================
-
-
-//===================
-
-
-//===================
-
-
-//===================
 
 
 #endif
