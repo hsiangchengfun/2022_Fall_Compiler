@@ -145,7 +145,7 @@ Terminals, with rules where they appear
     GETOP <text> (294) 66
     LETOP <text> (295) 67
     NEQOP <text> (296) 68
-    IDENTIFIER <node> (297) 1 2 3 17 18 36 39 40 52 53
+    IDENTIFIER <text> (297) 1 2 3 17 18 36 39 40 52 53
     REALNUMBER <dval> (298) 8
     INTEGERNUM <val> (299) 7 9
     SCIENTIFIC <text> (300) 10
@@ -156,88 +156,88 @@ Nonterminals, with rules where they appear
 
     $accept (47)
         on left: 0
-    prog <node> (48)
+    prog <ProgNode> (48)
         on left: 1
         on right: 0
-    identifier_list <node> (49)
+    identifier_list <IdentListNode> (49)
         on left: 2 3
         on right: 1 3 4 21 22
-    declarations <node> (50)
+    declarations <DeclarNode> (50)
         on left: 4 5
         on right: 1 4 16
-    type <node> (51)
+    type <TypeNode> (51)
         on left: 6 7
         on right: 4 7 21 22
-    num <node> (52)
+    num <NumNode> (52)
         on left: 8 9 10
         on right: 54
-    standard_type <node> (53)
+    standard_type <StandTypeNode> (53)
         on left: 11 12 13
         on right: 6 17
-    subprogram_declarations <node> (54)
+    subprogram_declarations <SubDeclarSNode> (54)
         on left: 14 15
         on right: 1 14 16
-    subprogram_declaration <node> (55)
+    subprogram_declaration <SubDeclarNode> (55)
         on left: 16
         on right: 14
-    subprogram_head <node> (56)
+    subprogram_head <SubHeadNode> (56)
         on left: 17 18
         on right: 16
-    arguments <node> (57)
+    arguments <ArgumentsNode> (57)
         on left: 19 20
         on right: 17 18
-    parameter_list <node> (58)
+    parameter_list <ParameterListNode> (58)
         on left: 21 22
         on right: 19 22
-    optional_var <node> (59)
+    optional_var <OptionalVarNode> (59)
         on left: 23 24
         on right: 21 22
-    compound_statement <node> (60)
+    compound_statement <CompoundStatementNode> (60)
         on left: 25
         on right: 1 16 32
-    optional_statements <node> (61)
+    optional_statements <OptionalStatementSNode> (61)
         on left: 26 27
         on right: 25
-    statement_list <node> (62)
+    statement_list <StatementListNode> (62)
         on left: 28 29
         on right: 26 29
-    statement <node> (63)
+    statement <StatementNode> (63)
         on left: 30 31 32 33 34 35
         on right: 28 29 33 34
-    variable <node> (64)
+    variable <VarNode> (64)
         on left: 36
         on right: 30
-    tail <node> (65)
+    tail <TailNode> (65)
         on left: 37 38
         on right: 36 37 52
-    procedure_statement <node> (66)
+    procedure_statement <ProcedureStatementNode> (66)
         on left: 39 40
         on right: 31
-    expression_list <node> (67)
+    expression_list <ExpressionListNode> (67)
         on left: 41 42
         on right: 40 42 53
-    expression <node> (68)
+    expression <ExpressionNode> (68)
         on left: 43 44 45
         on right: 30 33 34 37 41 42 56
-    boolexpression <node> (69)
+    boolexpression <BoolExpNode> (69)
         on left: 46 47
         on right: 43 44 45
-    simple_expression <node> (70)
+    simple_expression <SimpleExpressionNode> (70)
         on left: 48 49
         on right: 46 47 49
-    term <node> (71)
+    term <TermNode> (71)
         on left: 50 51
         on right: 48 49 51
-    factor <node> (72)
+    factor <FactorNode> (72)
         on left: 52 53 54 55 56 57 58
         on right: 50 51 57 58
-    addop <node> (73)
+    addop <AddOpNode> (73)
         on left: 59 60
         on right: 49
-    mulop <node> (74)
+    mulop <MulNode> (74)
         on left: 61 62
         on right: 51
-    relop <node> (75)
+    relop <RelopNode> (75)
         on left: 63 64 65 66 67 68
         on right: 47
 

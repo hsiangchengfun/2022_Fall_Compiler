@@ -32,7 +32,8 @@ $(OBJDIR)/%.o: $(LIBDIR)/%.c
 
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-
+run:
+	
 prepare:
 	# we have installed the package meet the basic needs
 	# you can prepare the extra package you need here, e.g.

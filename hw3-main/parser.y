@@ -22,8 +22,17 @@ extern int yyleng;
 static Node* root = NULL;
 int scope = 0;
 
-extern int yylex(void);
+
+extern
+#ifdef __cplusplus
+"C"
+#endif
+int yylex(void);
 static void yyerror(const char *msg);
+extern int yylex_destroy(void);
+
+extern int yylex(void);
+
 %}
 
 %locations
@@ -32,10 +41,11 @@ static void yyerror(const char *msg);
 
 %token LPAREN RPAREN SEMICOLON DOT COMMA COLON LBRACE RBRACE DOTDOT ASSIGNMENT ADDOP SUBOP MULOP DIVOP LTOP GTOP EQOP GETOP LETOP NEQOP
 
-%token IDENTIFIER REALNUMBER INTEGERNUM SCIENTIFIC LITERALSTR
+%token IDENTIFIER REALNUMBER INTEGERNUM SCIENTIFIC LITERALSTR 
 
 %code requires{
     #include "ast.h"
+    #include "lib.h"
 }
 
 %union {
@@ -43,10 +53,68 @@ static void yyerror(const char *msg);
     char* text;
     double dval;
     Node* node;
+    ProgNode* ProgNode;
+    ParameterListNode* ParameterListNode;
+    IdentListNode* IdentListNode; 
+    ProcedureStatementNode* ProcedureStatementNode;
+    TypeNode* TypeNode;
+    SimpleExpressionNode* SimpleExpressionNode;
+    BoolExpNode* BoolExpNode;
+    TailNode* TailNode;
+    FactorNode* FactorNode;
+    NumNode* NumNode;
+    ExpressionListNode* ExpressionListNode;
+    ExpressionNode* ExpressionNode;
+    DeclarNode* DeclarNode;
+    ArgumentsNode* ArgumentsNode;
+    AddOpNode* AddOpNode;
+    RelopNode* RelopNode;
+    TermNode* TermNode;
+    StandTypeNode* StandTypeNode;
+    CompoundStatementNode* CompoundStatementNode;
+    VarNode* VarNode;
+    StatementNode* StatementNode;
+    SubHeadNode* SubHeadNode;
+    StatementListNode* StatementListNode;
+    SubDeclarNode* SubDeclarNode;
+    OptionalStatementSNode* OptionalStatementSNode;
+    MulNode* MulNode;
+    StatementlistNode* StatementlistNode;
+    SubDeclarSNode* SubDeclarSNode;
+    OptionalVarNode* OptionalVarNode;
+
 }
 
-%type <node> prog identifier_list declarations subprogram_declarations compound_statement type standard_type subprogram_declaration subprogram_head arguments parameter_list optional_var optional_statements statement_list statement variable tail procedure_statement expression_list expression boolexpression simple_expression term factor addop mulop relop num IDENTIFIER
-%type <text> SCIENTIFIC LITERALSTR LPAREN RPAREN SEMICOLON DOT COMMA COLON LBRACE RBRACE DOTDOT ASSIGNMENT ADDOP SUBOP MULOP DIVOP LTOP GTOP EQOP GETOP LETOP NEQOP
+%type <ProgNode> prog 
+%type <IdentListNode> identifier_list 
+%type <DeclarNode> declarations 
+%type <SubDeclarSNode> subprogram_declarations 
+%type <CompoundStatementNode> compound_statement 
+%type <TypeNode> type 
+%type <StandTypeNode> standard_type 
+%type <SubDeclarNode> subprogram_declaration 
+%type <SubHeadNode> subprogram_head 
+%type <ArgumentsNode> arguments 
+%type <ParameterListNode> parameter_list 
+%type <OptionalVarNode>optional_var 
+%type <OptionalStatementSNode> optional_statements 
+%type <StatementListNode> statement_list 
+%type <StatementNode> statement 
+%type <VarNode> variable 
+%type <TailNode> tail 
+%type <ProcedureStatementNode> procedure_statement 
+%type <ExpressionListNode> expression_list 
+%type <ExpressionNode> expression 
+%type <BoolExpNode> boolexpression 
+%type <SimpleExpressionNode> simple_expression 
+%type <TermNode> term 
+%type <FactorNode> factor 
+%type <AddOpNode> addop 
+%type <MulNode> mulop 
+%type <RelopNode> relop 
+%type <NumNode> num 
+/* %type <text>IDENTIFIER */
+%type <text>  IDENTIFIER SCIENTIFIC LITERALSTR LPAREN RPAREN SEMICOLON DOT COMMA COLON LBRACE RBRACE DOTDOT ASSIGNMENT ADDOP SUBOP MULOP DIVOP LTOP GTOP EQOP GETOP LETOP NEQOP
 %type <val> INTEGERNUM
 %type <dval> REALNUMBER
 

@@ -4,11 +4,37 @@
 #include "lib.h"
 #include "info.h"
 #include "stdio.h"
-#include "list.h"
+#include "print.h"
+
+
+char* buffer;
+// stderr
+#define print_REDEF_FUN(buffer) do { fprintf(stderr,REDEF_FUN,tmpnode->node.loc.first_line, tmpnode->node.loc.first_column+1,buffer); } while(0)
+#define print_REDEF_ARG(buffer) do { fprintf(stderr,REDEF_ARG,tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column,buffer); } while(0)
+#define print_REDEF_VAR(buffer) do { fprintf(stderr,REDEF_VAR,curr->node.loc.first_line, curr->node.loc.first_column,buffer); } while(0)
+#define print_UNDEC_VAR(buffer) do { fprintf(stderr,UNDEC_VAR,tmpnode->node.loc.first_line, tmpnode->node.loc.first_column,buffer); } while(0)
+#define print_UNDEC_FUN(buffer) do { fprintf(stderr,UNDEC_FUN,tmpnode->node.loc.first_line, tmpnode->node.loc.first_column,buffer); } while(0)
+#define print_ARITH_TYPE(buffer) do { fprintf(stderr,ARITH_TYPE,tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column,buffer); } while(0)
+#define print_ASSIG_TYPE(buffer) do { fprintf(stderr,ASSIG_TYPE,tmpnode->varnode->node.loc.first_line, tmpnode->varnode->node.loc.first_column); } while(0)
+#define print_INDEX_TYPE(buffer) do { fprintf(stderr,INDEX_TYPE,tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column,buffer); } while(0)
+#define print_INDEX_MANY(buffer) do { fprintf(stderr,INDEX_MANY,tmpnode->node.loc.first_line, tmpnode->node.loc.first_column,buffer); } while(0)
+#define print_WRONG_ARGS(buffer) do { fprintf(stderr,WRONG_ARGS,tmpnode->node.loc.first_line, tmpnode->node.loc.first_column,buffer); } while(0)
+#define print_RETURN_VAL(buffer) do { fprintf(stderr,RETURN_VAL,tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column,buffer); } while(0)
+
+
+//stdin
+#define print_SHOW_NEWSYM do { SHOW_NEWSYM(buffer); } while(0)
+#define print_SHOW_NEWSCP do { SHOW_NEWSCP(); } while(0)
+#define print_SHOW_CLSSCP do { SHOW_CLSSCP(); } while(0)
+#define print_SHOW_SYMTAB_HEAD do { SHOW_SYMTAB_HEAD(); } while(0)
+#define print_SHOW_SYMTAB_TAIL do { SHOW_SYMTAB_TAIL(); } while(0)
+#define print_SYMTAB_ENTRY_FMT do { printf(SYMTAB_ENTRY_FMT,"ayh3",200,"sey"); } while(0)
 
 
 
-Node* newAddOpNode( int fl, int fc, bool add, int ll, int lc ){
+
+//Addop
+AddOpNode* newAddOpNode( int fl, int fc, bool add, int ll, int lc ){
     AddOpNode* tmpnode = (AddOpNode*) malloc ( sizeof(AddOpNode) );
     tmpnode->add = add;
     tmpnode->node.type = NODE_AddOp;
@@ -21,15 +47,15 @@ Node* newAddOpNode( int fl, int fc, bool add, int ll, int lc ){
     return tmpnode;
 }
 
-void* AddOpNode_visit(void* node){
+int AddOpNode_visit(void* node){
 
     return 0;
 }
 
 
+//Argument
 
-
-Node* newArgumentsNode( int fl, int fc, ParameterListNode* parameterlist, int ll, int lc ){
+ArgumentsNode* newArgumentsNode( int fl, int fc, ParameterListNode* parameterlist, int ll, int lc ){
     ArgumentsNode* tmpnode = (ArgumentsNode*) malloc ( sizeof(ArgumentsNode) );
     tmpnode->parameterlist = parameterlist;
     tmpnode->node.type = NODE_Arguments;
@@ -42,14 +68,14 @@ Node* newArgumentsNode( int fl, int fc, ParameterListNode* parameterlist, int ll
     return tmpnode;
 }
 
-void* ArgumentsNode_visit(void* node){
+int ArgumentsNode_visit(void* node){
 
     return 0;
 }
 
 
-
-Node* newBoolExpNode( int fl, int fc, SimpleExpressionNode* first, RelopNode* relop, SimpleExpressionNode* least, int ll, int lc ){
+//Boolexpression
+BoolExpNode* newBoolExpNode( int fl, int fc, SimpleExpressionNode* first, RelopNode* relop, SimpleExpressionNode* least, int ll, int lc ){
     BoolExpNode* tmpnode = (BoolExpNode*) malloc ( sizeof(BoolExpNode) );
     tmpnode->first = first;
     tmpnode->relop = relop;
@@ -64,41 +90,43 @@ Node* newBoolExpNode( int fl, int fc, SimpleExpressionNode* first, RelopNode* re
     return tmpnode;
 }
 
-void* BoolExpNode_visit(void* node){
+int BoolExpNode_visit(void* node){
     BoolExpNode* tmpnode = (BoolExpNode*) node;
     
-    int* tmpnode1, tmpnode2;
+    int* tmpnode1;
+    int* tmpnode2;
     int datatype = -1;
 
     if (tmpnode->relop != 0){
-        tmpnode1 = (int*) tmpnode->first->node.visit(tmpnode->first);
+        tmpnode1 = (int *)tmpnode->first->node.visit(tmpnode->first);
         tmpnode->relop->node.visit(tmpnode->relop);
-        tmpnode2 = (int*) tmpnode->least->node.visit(tmpnode->least);
+        tmpnode2 = (int *) tmpnode->least->node.visit(tmpnode->least);
 
         if ( ((int)tmpnode1 >= 0) && ((int)tmpnode2 >= 0) && ((int)tmpnode1 != tmpnode2) ){
             switch (tmpnode->relop->type){
                 case 0:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, "<");
+                    
+                    print_ARITH_TYPE("<");
                     break;
 
                 case 1:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, ">");
+                    print_ARITH_TYPE(">");
                     break;
 
                 case 2:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, "=");
+                    print_ARITH_TYPE("=");
                     break;
 
                 case 3:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, ">=");
+                    print_ARITH_TYPE(">=");
                     break;
 
                 case 4:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, "<=");
+                    print_ARITH_TYPE("<=");
                     break;
 
                 case 5:
-                    fprintf(stderr, ARITH_TYPE, tmpnode->relop->node.loc.first_line, tmpnode->relop->node.loc.first_column, "!=");
+                    print_ARITH_TYPE("!=");
                     break;
 
                 default:
@@ -112,20 +140,19 @@ void* BoolExpNode_visit(void* node){
         }
 
     }else{
-        return tmpnode->first->node.visit(tmpnode->first);
+        return (int)tmpnode->first->node.visit(tmpnode->first);
     }   
 
     return -1;
 }
 
 
-//compound
 
-
+//Compoundstatement
 extern list* listRoot;
 extern int scope;
 
-Node* newCompoundStatementNode( int fl, int fc, OptionalStatementSNode* optionalstatementsnode, int ll, int lc ){
+CompoundStatementNode* newCompoundStatementNode( int fl, int fc, OptionalStatementSNode* optionalstatementsnode, int ll, int lc ){
     CompoundStatementNode* tmpnode = (CompoundStatementNode*) malloc ( sizeof(CompoundStatementNode) );
     tmpnode->statements = optionalstatementsnode;
     tmpnode->node.type = NODE_CompoundStatement;
@@ -138,7 +165,7 @@ Node* newCompoundStatementNode( int fl, int fc, OptionalStatementSNode* optional
     return tmpnode;
 }
 
-void* CompoundStatementNode_visit(void* node){
+int CompoundStatementNode_visit(void* node){
     CompoundStatementNode* tmpnode = (CompoundStatementNode*) node;
     // printf("%d: %d CompoundStatementNode\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
     if (tmpnode->statements != NULL)
@@ -148,10 +175,9 @@ void* CompoundStatementNode_visit(void* node){
 }
 
 
-extern list* listRoot;
-extern int scope;
 
-Node* newDeclarNode( int fl, int fc, DeclarNode* declarnode, IdentListNode* identlist, TypeNode* type, int ll, int lc ){
+//Declaration
+DeclarNode* newDeclarNode( int fl, int fc, DeclarNode* declarnode, IdentListNode* identlist, TypeNode* type, int ll, int lc ){
     DeclarNode* tmpnode = (DeclarNode*) malloc ( sizeof(DeclarNode) );
     tmpnode->NextNode = declarnode;
     tmpnode->identlistnode = identlist;
@@ -166,7 +192,7 @@ Node* newDeclarNode( int fl, int fc, DeclarNode* declarnode, IdentListNode* iden
     return tmpnode;
 }
 
-void* DeclarNode_visit(void* node){
+int DeclarNode_visit(void* node){
     DeclarNode* tmpnode = (DeclarNode*)node;
 
     // go to leftmost declarations
@@ -177,7 +203,8 @@ void* DeclarNode_visit(void* node){
     IdentListNode* curr = tmpnode->identlistnode;
     while(curr != NULL){
         if ( checkList(listRoot, curr->id, scope, Data) ){
-            fprintf(stderr, REDEF_VAR, curr->node.loc.first_line, curr->node.loc.first_column, curr->id );
+            print_REDEF_VAR(curr->id);
+            // fprintf(stderr, REDEF_VAR, curr->node.loc.first_line, curr->node.loc.first_column, curr->id );
         }else{
             // add a symbol
             SHOW_NEWSYM(curr->id);
@@ -256,10 +283,8 @@ void* DeclarNode_visit(void* node){
 }
 
 
-//exp
-
-
-Node* newExpNode( int fl, int fc, ExpressionNode* first, int op, ExpressionNode* least, int ll, int lc ){
+//Expression
+ExpressionNode* newExpNode( int fl, int fc, BoolExpNode* first, int op, BoolExpNode* least, int ll, int lc ){
     ExpressionNode* tmpnode = (ExpressionNode*) malloc ( sizeof(ExpressionNode) );
     tmpnode->first = first;
     tmpnode->least = least;
@@ -274,16 +299,14 @@ Node* newExpNode( int fl, int fc, ExpressionNode* first, int op, ExpressionNode*
     return tmpnode;
 }
 
-void* ExpNode_visit(void* node){
+int ExpNode_visit(void* node){
     ExpressionNode* tmpnode = (ExpressionNode*) node;
     
-    // debug
-    // fprintf(stderr, "%d: %d has an ExpressionNode\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
 
     switch (tmpnode->type)
     {
     case 0: 
-        return tmpnode->first->node.visit(tmpnode->first);
+        return (int)tmpnode->first->node.visit(tmpnode->first);
         break;
 
     case 1:
@@ -305,8 +328,8 @@ void* ExpNode_visit(void* node){
     return -1;
 }
 
-//exp liost
-Node* newExpressionListNode( int fl, int fc, ExpressionListNode* expressionlistnode, ExpressionNode* expressionnode, int ll, int lc ){
+//ExpresionList
+ExpressionListNode* newExpressionListNode( int fl, int fc, ExpressionListNode* expressionlistnode, ExpressionNode* expressionnode, int ll, int lc ){
     ExpressionListNode* tmpnode = (ExpressionListNode*) malloc ( sizeof(ExpressionListNode) );
     tmpnode->expressionlistnode = expressionlistnode;
     tmpnode->expressionnode = expressionnode;
@@ -320,7 +343,7 @@ Node* newExpressionListNode( int fl, int fc, ExpressionListNode* expressionlistn
     return tmpnode;
 }
 
-void* ExpressionListNode_visit(void* node){
+int ExpressionListNode_visit(void* node){
     ExpressionListNode* tmpnode = (ExpressionListNode*) node;
 
     if (tmpnode->expressionlistnode != 0)
@@ -333,10 +356,7 @@ void* ExpressionListNode_visit(void* node){
 }
 
 
-// factor
-
-extern list* listRoot;
-extern int scope;
+//Factor
 
 int checkArguments(ExpressionListNode* listNode, symbolobj** curr, int num){
     if (listNode->expressionlistnode != 0){
@@ -358,7 +378,7 @@ int checkArguments(ExpressionListNode* listNode, symbolobj** curr, int num){
     return 1;
 }
 
-Node* newFactorNode( int fl, int fc, int type, char* id, TailNode* tailnode, ExpressionListNode* expressionlistnode, NumNode* numnode, ExpressionNode* expressionnode, FactorNode* factornode, int ll, int lc ){
+FactorNode* newFactorNode( int fl, int fc, int type, char* id, TailNode* tailnode, ExpressionListNode* expressionlistnode, NumNode* numnode, ExpressionNode* expressionnode, FactorNode* factornode, int ll, int lc ){
     FactorNode* tmpnode = (FactorNode*) malloc ( sizeof(FactorNode) );
     tmpnode->type = type;
     tmpnode->id = id;
@@ -377,12 +397,10 @@ Node* newFactorNode( int fl, int fc, int type, char* id, TailNode* tailnode, Exp
     return tmpnode;
 }
 
-void* FactorNode_visit(void* node){
+int FactorNode_visit(void* node){
     FactorNode* tmpnode = (FactorNode*)node;
 
-    // debug
-    // fprintf(stderr, "%d: %d has an FactorNode\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
-    
+
     int datatype = -1;
     list* listtmpnode = NULL;
     symbolobj* currtmpnode = NULL;
@@ -395,7 +413,7 @@ void* FactorNode_visit(void* node){
             currtmpnode = listtmpnode->data;
             datatype = currtmpnode->type;
         }else{
-            fprintf(stderr, UNDEC_VAR, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id );
+            print_UNDEC_VAR(tmpnode->id);
         }
 
         TailNode* curr = tmpnode->tailnode;
@@ -405,16 +423,13 @@ void* FactorNode_visit(void* node){
                 if (currtmpnode->type == Array){
                     currtmpnode = ((arraysymbolobj*)currtmpnode)->data;
                 }else{
-                    fprintf(stderr, INDEX_MANY, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id);
+                    print_INDEX_MANY(tmpnode->id);
                     break;
                 }
                 datatype = currtmpnode->type;
             }
 
         if (tmpnode->tailnode != 0){
-
-            // debug
-            // fprintf(stderr, "%d: %d has an Node\n", tmpnode->tailnode->node.loc.first_line, tmpnode->tailnode->node.loc.first_column);
 
             tmpnode->tailnode->node.visit(tmpnode->tailnode);
         }
@@ -432,7 +447,7 @@ void* FactorNode_visit(void* node){
             }
             datatype = currtmpnode->type;
         }else{
-            fprintf(stderr, UNDEC_FUN, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id );
+            print_UNDEC_FUN(tmpnode->id);
         }
 
         if (tmpnode->expressionlistnode != 0)
@@ -442,7 +457,7 @@ void* FactorNode_visit(void* node){
             // check arguments
             symbolobj* tmpnodenode = ((funcsymbolobj*)listtmpnode->data)->passInType;
             if ( checkArguments( tmpnode->expressionlistnode, &tmpnodenode, 0 ) )
-                fprintf(stderr, WRONG_ARGS, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id);
+                print_WRONG_ARGS(tmpnode->id);
             
         }
 
@@ -452,9 +467,6 @@ void* FactorNode_visit(void* node){
     case 2:
         // num
 
-        // debug
-        // fprintf(stderr, "test: %d\n", tmpnode->num->node.visit(tmpnode->num));
-        
         return tmpnode->num->node.visit(tmpnode->num);
         break;
     
@@ -492,8 +504,8 @@ void* FactorNode_visit(void* node){
 }
 
 
-//identifier
-Node* newIdentListNode( int fl, int fc, char* id, IdentListNode* identlistnode, int ll, int lc ){
+//IdentifierList
+IdentListNode* newIdentListNode( int fl, int fc, char* id, IdentListNode* identlistnode, int ll, int lc ){
     IdentListNode* tmpnode = (IdentListNode*) malloc ( sizeof(IdentListNode) );
     tmpnode->id = id;
     tmpnode->PrevNode = identlistnode;
@@ -508,14 +520,14 @@ Node* newIdentListNode( int fl, int fc, char* id, IdentListNode* identlistnode, 
 }
 
 
-void* IdentListNode_visit(void* node){
+int IdentListNode_visit(void* node){
 
     return 0;
 }
 
 
-//mulop
-Node* newMulNode( int fl, int fc, int type, int ll, int lc ){
+//Mulop
+MulNode* newMulNode( int fl, int fc, int type, int ll, int lc ){
     MulNode* tmpnode = (MulNode*) malloc ( sizeof(MulNode) );
     tmpnode->type = type;
     tmpnode->node.type = NODE_MulOp;
@@ -528,19 +540,18 @@ Node* newMulNode( int fl, int fc, int type, int ll, int lc ){
     return tmpnode;
 }
 
-void* MulNode_visit(void* node){
+int MulNode_visit(void* node){
 
     return 0;
 }
 
 
-//num
+//Numop
 
-Node* newNumNode( int fl, int fc, int type, double num, char* string, int ll, int lc ){
+NumNode* newNumNode( int fl, int fc, int type, double num, char* string, int ll, int lc ){
     NumNode* tmpnode = (NumNode*) malloc ( sizeof(NumNode) );
     tmpnode->type = type;
     if (type == 2){
-        // sscanf(string, "%llfE%llf", tmpnode->num, tmpnode->exp);
     }else{
         tmpnode->num = num;
         tmpnode->exp = 0.0f;
@@ -555,7 +566,7 @@ Node* newNumNode( int fl, int fc, int type, double num, char* string, int ll, in
     return tmpnode;
 };
 
-void* NumNode_visit(void* node){
+int NumNode_visit(void* node){
     NumNode* tmpnode = (NumNode*) node;
 
     switch (tmpnode->type)
@@ -582,10 +593,10 @@ void* NumNode_visit(void* node){
 }
 
 
-//opt stt
 
 
-Node* newOptionalStatementSNode( int fl, int fc, StatementListNode* statementlistnode, int ll, int lc ){
+//OptionalStatement
+OptionalStatementSNode* newOptionalStatementSNode( int fl, int fc, StatementListNode* statementlistnode, int ll, int lc ){
     OptionalStatementSNode* tmpnode = (OptionalStatementSNode*) malloc ( sizeof(OptionalStatementSNode) );
     tmpnode->statementlistnode = statementlistnode;
     tmpnode->node.type = NODE_OptionalStatementS;
@@ -599,22 +610,21 @@ Node* newOptionalStatementSNode( int fl, int fc, StatementListNode* statementlis
 }
 
 
-void* OptionalStatementSNode_visit(void* node){
+int OptionalStatementSNode_visit(void* node){
     OptionalStatementSNode* tmpnode = (OptionalStatementSNode*) node;
-    // printf("%d: %d OptionalStatementSNode\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
     tmpnode->statementlistnode->node.visit(tmpnode->statementlistnode);
 
     return -1;
 }
 
 
-//opt var
-void* OptionalVarNode_visit(void* node){
+//OptionalVar
+int OptionalVarNode_visit(void* node){
     
     return 0;
 }
 
-Node* newOptionalVarNode( int fl, int fc ){
+OptionalVarNode* newOptionalVarNode( int fl, int fc ){
     OptionalVarNode* tmpnode = (OptionalVarNode*) malloc ( sizeof(OptionalVarNode) );
     tmpnode->node.type = NODE_OptionalVar;
     tmpnode->node.visit = OptionalVarNode_visit;
@@ -627,8 +637,8 @@ Node* newOptionalVarNode( int fl, int fc ){
 }
 
 
-//para list
-Node* newParameterListNode( int fl, int fc, OptionalVarNode* optionalvarnode, IdentListNode* identlistnode, TypeNode* typenode, ParameterListNode* parameterlistnode, int ll, int lc ){
+//ParameterList
+ParameterListNode* newParameterListNode( int fl, int fc, OptionalVarNode* optionalvarnode, IdentListNode* identlistnode, TypeNode* typenode, ParameterListNode* parameterlistnode, int ll, int lc ){
     ParameterListNode* tmpnode = (ParameterListNode*) malloc ( sizeof(ParameterListNode) );
     tmpnode->optionalvarnode = optionalvarnode;
     tmpnode->identlistnode = identlistnode;
@@ -644,7 +654,7 @@ Node* newParameterListNode( int fl, int fc, OptionalVarNode* optionalvarnode, Id
     return tmpnode;
 }
 
-void* ParameterListNode_visit(void* node){
+int ParameterListNode_visit(void* node){
 
     return 0;
 }
@@ -654,7 +664,7 @@ void* ParameterListNode_visit(void* node){
 
 
 
-//procedurestt
+//Procedurestatament
 extern list* listRoot;
 extern int scope;
 
@@ -679,7 +689,7 @@ int checkProcedArguments(ExpressionListNode* listNode, symbolobj** curr, int num
 
 }
 
-Node* newProcedureStatementNode( int fl, int fc, char* id, ExpressionListNode* expressionlistnode, int ll, int lc ){
+ProcedureStatementNode* newProcedureStatementNode( int fl, int fc, char* id, ExpressionListNode* expressionlistnode, int ll, int lc ){
     ProcedureStatementNode* tmpnode = (ProcedureStatementNode*) malloc ( sizeof(ProcedureStatementNode) );
     tmpnode->id = id;
     tmpnode->expressionlistnode = expressionlistnode;
@@ -693,11 +703,9 @@ Node* newProcedureStatementNode( int fl, int fc, char* id, ExpressionListNode* e
     return tmpnode;
 }
 
-void* ProcedureStatementNode_visit(void* node){
+int ProcedureStatementNode_visit(void* node){
     ProcedureStatementNode* tmpnode = (ProcedureStatementNode*) node;
 
-    // debug
-    // fprintf(stderr, "%d: %d has an Node\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
 
     list* listTemp;
     if ( GetList( listRoot, &listTemp, tmpnode->id ) ){
@@ -707,27 +715,27 @@ void* ProcedureStatementNode_visit(void* node){
         symbolobj* tmpnodenode = ((funcsymbolobj*)listTemp->data)->passInType;
         if ( (tmpnodenode != 0) && (tmpnode->expressionlistnode != 0) )
             if ( checkProcedArguments( tmpnode->expressionlistnode, &tmpnodenode, 0 ) )
-                fprintf(stderr, WRONG_ARGS, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id);
+                print_WRONG_ARGS(tmpnode->id);
     }else{
         // undeclared variables
-        fprintf(stderr, UNDEC_FUN, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id );
+        print_UNDEC_FUN(tmpnode->id);
     }
 
     if (tmpnode->expressionlistnode != 0)
         tmpnode->expressionlistnode->node.visit(tmpnode->expressionlistnode);
 
-    return -1;
 }
 
 
 
+
+
+
 //Prog
-
-
 list* listRoot;
 extern int scope;
 
-Node* newProgNode( int fl, int fc, char* id, IdentListNode* identlist, DeclarNode* declar, SubDeclarSNode* subdeclars, CompoundStatementNode* compoundstatement, int ll, int lc ){
+ProgNode* newProgNode( int fl, int fc, char* id, IdentListNode* identlist, DeclarNode* declar, SubDeclarSNode* subdeclars, CompoundStatementNode* compoundstatement, int ll, int lc ){
     // initialize my ProgNode
     ProgNode* tmpnode = (ProgNode*) malloc ( sizeof(ProgNode) );
     tmpnode->id = id;
@@ -745,7 +753,7 @@ Node* newProgNode( int fl, int fc, char* id, IdentListNode* identlist, DeclarNod
     return tmpnode;
 };
 
-void* ProgNode_visit(void* node){
+int ProgNode_visit(void* node){
     // I don't know what to do
     ProgNode* tmpnode = (ProgNode*)node;
 
@@ -772,12 +780,11 @@ void* ProgNode_visit(void* node){
     list_printTable(listRoot);
     SHOW_SYMTAB_TAIL();
 
-    return 0;
 }
 
 
-//relop
-Node* newRelopNode( int fl, int fc, int type, int ll, int lc ){
+//Relop
+RelopNode* newRelopNode( int fl, int fc, int type, int ll, int lc ){
     RelopNode* tmpnode = (RelopNode*) malloc ( sizeof(RelopNode) );
     tmpnode->type = type;
     tmpnode->node.type = NODE_RelOp;
@@ -790,16 +797,17 @@ Node* newRelopNode( int fl, int fc, int type, int ll, int lc ){
     return tmpnode;
 }
 
-void* RelopNode_visit(void* node){
+int RelopNode_visit(void* node){
     RelopNode* tmpnode = (RelopNode*) node;
 
     return tmpnode->type;
 }
 
-//simple exp
 
 
-Node* newSimpleExpressionNode( int fl, int fc, SimpleExpressionNode* simpleexpressionnode, AddOpNode* addnode, TermNode* termnode, int ll, int lc ){
+//SimpleExpression
+
+SimpleExpressionNode* newSimpleExpressionNode( int fl, int fc, SimpleExpressionNode* simpleexpressionnode, AddOpNode* addnode, TermNode* termnode, int ll, int lc ){
     SimpleExpressionNode* tmpnode = (SimpleExpressionNode*) malloc ( sizeof(SimpleExpressionNode) );
     tmpnode->termnode = termnode;
     tmpnode->simpleexpressionnode = simpleexpressionnode;
@@ -814,11 +822,9 @@ Node* newSimpleExpressionNode( int fl, int fc, SimpleExpressionNode* simpleexpre
     return tmpnode;
 }
 
-void* SimpleExpressionNode_visit(void* node){
+int SimpleExpressionNode_visit(void* node){
     SimpleExpressionNode* tmpnode = (SimpleExpressionNode*) node;
 
-    // debug
-    // fprintf(stderr, "%d: %d has an Node\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
     int* tmpnode1, *tmpnode2; 
     int datatype = -1;
 
@@ -827,13 +833,14 @@ void* SimpleExpressionNode_visit(void* node){
         tmpnode->addnode->node.visit(tmpnode->addnode);
         tmpnode2 = tmpnode->termnode->node.visit(tmpnode->termnode);
         
-        // debug
-        // fprintf(stderr, "test: %d %d\n", (int)tmpnode1, (int)tmpnode2);
+
 
         if ( ((int)tmpnode1 >= 0) && ((int)tmpnode2 >= 0) && ((int)tmpnode1 != tmpnode2) ){
             if (tmpnode->addnode->add)
+                // print_ARITH_TYPE("+");
                 fprintf(stderr, ARITH_TYPE, tmpnode->addnode->node.loc.first_line, tmpnode->addnode->node.loc.first_column, "+");
             else
+                //print_ARITH_TYPE("-");
                 fprintf(stderr, ARITH_TYPE, tmpnode->addnode->node.loc.first_line, tmpnode->addnode->node.loc.first_column, "-");
             
         }
@@ -849,8 +856,8 @@ void* SimpleExpressionNode_visit(void* node){
 }
 
 
-//stdtype
-Node* newStandTypeNode( int fl, int fc, int type, int ll, int lc ){
+//StandardType
+StandTypeNode* newStandTypeNode( int fl, int fc, int type, int ll, int lc ){
     StandTypeNode* tmpnode = (StandTypeNode*) malloc ( sizeof(StandTypeNode) );
     tmpnode->type = type;  // 0: integer, 1: real, 2: string
     tmpnode->node.type = NODE_StandardType;
@@ -863,19 +870,18 @@ Node* newStandTypeNode( int fl, int fc, int type, int ll, int lc ){
     return tmpnode;
 }
 
-void* StandTypeNode_visit(void* node){
+int StandTypeNode_visit(void* node){
 
     return 0;
 }
 
 
 
-//sttmnt
-
+//Statement
 extern list* listRoot;
 extern int scope;
 
-Node* newStatementNode( int fl, int fc, int type, VarNode* varnode, ExpressionNode* expressionnode, ProcedureStatementNode* procedurestatementnode, CompoundStatementNode* compoundstatementnode, StatementNode* statementnode1, StatementNode* statementnode2, int ll, int lc ){
+StatementNode* newStatementNode( int fl, int fc, int type, VarNode* varnode, ExpressionNode* expressionnode, ProcedureStatementNode* procedurestatementnode, CompoundStatementNode* compoundstatementnode, StatementNode* statementnode1, StatementNode* statementnode2, int ll, int lc ){
     StatementNode* tmpnode = (StatementNode*) malloc ( sizeof(StatementNode) );
     tmpnode->type = type;
     tmpnode->varnode = varnode;
@@ -894,11 +900,8 @@ Node* newStatementNode( int fl, int fc, int type, VarNode* varnode, ExpressionNo
     return tmpnode;
 }
 
-void* StatementNode_visit(void* node){
+int StatementNode_visit(void* node){
     StatementNode* tmpnode = (StatementNode*) node;
-
-    // debug
-    // fprintf(stderr, "%d: %d has an Node\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
 
     // store the node from symbol table
     list* listTemp;
@@ -918,37 +921,32 @@ void* StatementNode_visit(void* node){
         // visit expression
         tmpnode2 = (int*) tmpnode->expressionnode->node.visit(tmpnode->expressionnode);
 
-        // debug
-        // fprintf(stderr, "Data Type: %d\n", tmpnode1);
-        // fprintf(stderr, "Data Type: %d\n", tmpnode2);
 
         if ( ((int)tmpnode1 >= 0) && ((int)tmpnode2 >= 0) && ((int)tmpnode1 != tmpnode2) )
-            fprintf(stderr, ASSIG_TYPE, tmpnode->varnode->node.loc.first_line, tmpnode->varnode->node.loc.first_column);
+                print_ASSIG_TYPE("");
+            
         else if ( GetList(listRoot, &listTemp, tmpnode->varnode->id) ){
             if (listTemp->nodeType == Function){
                 if ( ((funcsymbolobj*)listTemp->data)->check > 1 ){
                     ((funcsymbolobj*)listTemp->data)->check--;
-                    fprintf(stderr, ASSIG_TYPE, tmpnode->varnode->node.loc.first_line, tmpnode->varnode->node.loc.first_column);
+                    print_ASSIG_TYPE("");
                 }
             }
         }
 
         break;
 
-    case 1:
-    // procdure_statement
+    case 1:// procdure_statement
         
         tmpnode->procedurestatementnode->node.visit(tmpnode->procedurestatementnode);
         break;
     
-    case 2:
-    // compound_statement
+    case 2:// compound_statement
         
         tmpnode->compoundstatementnode->node.visit(tmpnode->compoundstatementnode);
         break;
 
-    case 3:
-    // IF expression THEN statement ELSE statement
+    case 3:// IF expression THEN statement ELSE statement
         
         if (tmpnode->expressionnode != 0)
             tmpnode->expressionnode->node.visit(tmpnode->expressionnode);
@@ -961,8 +959,7 @@ void* StatementNode_visit(void* node){
 
         break;
 
-    case 4:
-    // WHILE expression DO statement
+    case 4:// WHILE expression DO statement
         
         if (tmpnode->expressionnode != 0)
             tmpnode->expressionnode->node.visit(tmpnode->expressionnode);
@@ -979,10 +976,11 @@ void* StatementNode_visit(void* node){
     return 0;
 }
 
-//state,emt list
 
 
-Node* newStatementListNode( int fl, int fc, StatementListNode* statementlistnode, StatementNode* statementnode, int ll, int lc ){
+//StatementList
+
+StatementListNode* newStatementListNode( int fl, int fc, StatementListNode* statementlistnode, StatementNode* statementnode, int ll, int lc ){
     StatementListNode* tmpnode = (StatementListNode*) malloc ( sizeof(StatementListNode) );
     tmpnode->nextList = statementlistnode;
     tmpnode->statementnode = statementnode;
@@ -996,7 +994,7 @@ Node* newStatementListNode( int fl, int fc, StatementListNode* statementlistnode
     return tmpnode;
 }
 
-void* StatementListNode_visit(void* node){
+int StatementListNode_visit(void* node){
     StatementListNode* tmpnode = (StatementListNode*) node;
     // printf("%d: %d StatementListNode\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
     if (tmpnode->nextList != 0){
@@ -1010,11 +1008,11 @@ void* StatementListNode_visit(void* node){
 }
 
 
-//subproghead
+//Subprogramhead
 extern int scope;
 extern list* listRoot;
 
-Node* newSubHeadNode( int fl, int fc, int type, char* id, StandTypeNode* standard_type, ArgumentsNode* arguments, int ll, int lc ){
+SubHeadNode* newSubHeadNode( int fl, int fc, int type, char* id, StandTypeNode* standard_type, ArgumentsNode* arguments, int ll, int lc ){
     SubHeadNode* tmpnode = (SubHeadNode*) malloc ( sizeof(SubHeadNode) );
     tmpnode->type = type;
     tmpnode->id = id;
@@ -1030,13 +1028,14 @@ Node* newSubHeadNode( int fl, int fc, int type, char* id, StandTypeNode* standar
     return tmpnode;
 }
 
-void* SubHeadNode_visit(void* node){
+int SubHeadNode_visit(void* node){
 
     return 0;
 }
 
-//subprog decsss
-Node* newSubDeclarSNode( int fl, int fc, SubDeclarSNode* prevnode, SubDeclarNode* nextnode, int ll, int lc ){
+
+//SubprogramDeclarations
+SubDeclarSNode* newSubDeclarSNode( int fl, int fc, SubDeclarSNode* prevnode, SubDeclarNode* nextnode, int ll, int lc ){
     SubDeclarSNode* tmpnode = (SubDeclarSNode*) malloc ( sizeof(SubDeclarSNode) );
     tmpnode->PrevNode = prevnode;
     tmpnode->NextNode = nextnode;
@@ -1050,7 +1049,7 @@ Node* newSubDeclarSNode( int fl, int fc, SubDeclarSNode* prevnode, SubDeclarNode
     return tmpnode;
 }
 
-void* SubDeclarSNode_visit(void* node){
+int SubDeclarSNode_visit(void* node){
     SubDeclarSNode* tmpnode = (SubDeclarSNode*) node;
     
     if(tmpnode->PrevNode != NULL){
@@ -1062,11 +1061,10 @@ void* SubDeclarSNode_visit(void* node){
     return 0;
 }
 
-//subprogdcc
 
-extern list* listRoot;
-extern int scope;
 
+
+//SubprogramDeclaration
 int checkExist(StatementNode* curr, char* id){
     if (curr != NULL){
         if ( (curr->type == 0) ){
@@ -1088,7 +1086,7 @@ int checkExist(StatementNode* curr, char* id){
     return 0;
 }
 
-Node* newSubDeclarNode( int fl, int fc, SubHeadNode* subheadnode, DeclarNode* declarnode, SubDeclarSNode* subdeclarsnode, CompoundStatementNode* compoundstatementnode, int ll, int lc ){
+SubDeclarNode* newSubDeclarNode( int fl, int fc, SubHeadNode* subheadnode, DeclarNode* declarnode, SubDeclarSNode* subdeclarsnode, CompoundStatementNode* compoundstatementnode, int ll, int lc ){
     SubDeclarNode* tmpnode = (SubDeclarNode*) malloc ( sizeof(SubDeclarNode) );
     tmpnode->head = subheadnode;
     tmpnode->declarnode = declarnode;
@@ -1104,7 +1102,7 @@ Node* newSubDeclarNode( int fl, int fc, SubHeadNode* subheadnode, DeclarNode* de
     return tmpnode;
 };
 
-void* SubDeclarNode_visit(void* node){
+int SubDeclarNode_visit(void* node){
     SubDeclarNode* tmpnode = (SubDeclarNode*) node;
 
     if (tmpnode->head != NULL){
@@ -1116,7 +1114,8 @@ void* SubDeclarNode_visit(void* node){
             
             tmpnodeList = newfunclist( tmpnode->head->id, scope, Void, Function );
             if ( checkList(listRoot, tmpnode->head->id, scope, Function) ){
-                fprintf(stderr, REDEF_FUN, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column+1, tmpnode->head->id);
+                print_REDEF_FUN(tmpnode->head->id);
+                // fprintf(stderr, REDEF_FUN, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column+1, tmpnode->head->id);
 
             }else{
                 SHOW_NEWSYM(tmpnode->head->id);
@@ -1215,7 +1214,7 @@ void* SubDeclarNode_visit(void* node){
                 IdentListNode* idList = curr->identlistnode;
                 ((passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType)->data = (symbolobj*) malloc ( sizeof(symbolobj) );
                 ((passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType)->data->type = typeTemp;
-                passinobjTemp = ((funcsymbolobj*)tmpnodeList->data)->passInType;
+                passinobjTemp = (passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType;
                 if ( checkList(listRoot, idList->id, scope, Data) ){
                     fprintf(stderr, REDEF_ARG, idList->node.loc.first_line, idList->node.loc.first_column, idList->id );
                 }else{
@@ -1224,7 +1223,7 @@ void* SubDeclarNode_visit(void* node){
                 }
                 passinobjTemp->next = NULL;
                 while( idList->PrevNode != NULL ){
-                    passinobjTemp->next = (passinobj*) malloc ( sizeof(passinobj) );
+                    passinobjTemp->next = (symbolobj*)(passinobj*) malloc ( sizeof(passinobj) );
                     ((passinobj*)passinobjTemp->next)->data = (symbolobj*) malloc ( sizeof(symbolobj) );
                     idList = idList->PrevNode;
                     passinobjTemp = (passinobj*)(passinobjTemp->next);
@@ -1247,7 +1246,7 @@ void* SubDeclarNode_visit(void* node){
                 ((arraysymbolobj*)((passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType)->data)->start = curr->typenode->array_start;
                 ((arraysymbolobj*)((passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType)->data)->end = curr->typenode->array_end;
 
-                passinobjTemp = ((funcsymbolobj*)tmpnodeList->data)->passInType;
+                passinobjTemp = (passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType;
                 TypeNode* currType = curr->typenode;
                 symbolobj* currArray = passinobjTemp->data;
 
@@ -1307,7 +1306,7 @@ void* SubDeclarNode_visit(void* node){
                     ((arraysymbolobj*)curr_array)->data = (symbolobj*) malloc ( sizeof(symbolobj) );
                     curr_array = ((arraysymbolobj*)curr_array)->data;
                     
-                    // 0: integer, 1: real, 2: string
+                    
                     switch (curr_type->standtypenode->type)
                     {
                     case 0:
@@ -1352,7 +1351,7 @@ void* SubDeclarNode_visit(void* node){
                         ((arraysymbolobj*)curr_array)->data = (symbolobj*) malloc ( sizeof(symbolobj) );
                         curr_array = ((arraysymbolobj*)curr_array)->data;
                         
-                        // 0: integer, 1: real, 2: string
+                    
                         switch (curr_type->standtypenode->type)
                         {
                         case 0:
@@ -1374,7 +1373,7 @@ void* SubDeclarNode_visit(void* node){
                     }
 
                     idList = idList->PrevNode;
-                    passinobj* passinobjTemp = ((funcsymbolobj*)tmpnodeList->data)->passInType;
+                    passinobj* passinobjTemp = (passinobj*)((funcsymbolobj*)tmpnodeList->data)->passInType;
                     TypeNode* currType = curr->typenode;
                     symbolobj* currArray = passinobjTemp->data;
                     ((arraysymbolobj*)currArray)->start = currType->array_start;
@@ -1393,7 +1392,7 @@ void* SubDeclarNode_visit(void* node){
                     ((arraysymbolobj*)currArray)->data = (symbolobj*) malloc ( sizeof(symbolobj) );
                     currArray = ((arraysymbolobj*)currArray)->data;
                     
-                    // 0: integer, 1: real, 2: string
+                    
                     switch (currType->standtypenode->type)
                     {
                     case 0:
@@ -1461,9 +1460,6 @@ void* SubDeclarNode_visit(void* node){
 
                 }
                 else{
-                    // array
-                    
-                    // do something
 
                 }
 
@@ -1491,8 +1487,8 @@ void* SubDeclarNode_visit(void* node){
 
     SHOW_CLSSCP();
     SHOW_SYMTAB_HEAD();
-    // print table
-    list_printTable(listRoot);
+    
+    list_printTable(listRoot); // print table
     SHOW_SYMTAB_TAIL();
     scope--;
     listRemove(listRoot, scope);
@@ -1502,9 +1498,9 @@ void* SubDeclarNode_visit(void* node){
 
 
 
-//tail
+//Tail
 
-Node* newTailNode( int fl, int fc, ExpressionNode* expressionnode, TailNode* tailnode, int ll, int lc ){
+TailNode* newTailNode( int fl, int fc, ExpressionNode* expressionnode, TailNode* tailnode, int ll, int lc ){
     TailNode* tmpnode = (TailNode*) malloc ( sizeof(TailNode) );
     tmpnode->expressionnode = expressionnode;
     tmpnode->tailnode = tailnode;
@@ -1518,11 +1514,10 @@ Node* newTailNode( int fl, int fc, ExpressionNode* expressionnode, TailNode* tai
     return tmpnode;
 }
 
-void* TailNode_visit(void* node){
+int TailNode_visit(void* node){
     TailNode* tmpnode = (TailNode*) node;
 
-    // debug
-    // fprintf(stderr, "%d: %d has an Node\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
+    
     int datatype = -1;
 
     if (tmpnode->expressionnode != 0){
@@ -1544,9 +1539,9 @@ void* TailNode_visit(void* node){
 }
 
 
-//term
+//Term
 
-Node* newTermNode( int fl, int fc, TermNode* termnode, MulNode* mulnode, FactorNode* factornode, int ll, int lc ){
+TermNode* newTermNode( int fl, int fc, TermNode* termnode, MulNode* mulnode, FactorNode* factornode, int ll, int lc ){
     TermNode* tmpnode = (TermNode*) malloc ( sizeof(TermNode) );
     tmpnode->termnode = termnode;
     tmpnode->mulnode = mulnode;
@@ -1561,12 +1556,10 @@ Node* newTermNode( int fl, int fc, TermNode* termnode, MulNode* mulnode, FactorN
     return tmpnode;
 }
 
-void* TermNode_visit(void* node){
+int TermNode_visit(void* node){
     TermNode* tmpnode = (TermNode*) node;
 
-    // debug
-    // fprintf(stderr, "%d: %d has an Node\n", tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
-
+   
     int* tmpnode1, *tmpnode2;
     int datatype = -1;
 
@@ -1588,19 +1581,19 @@ void* TermNode_visit(void* node){
         }
         
     }else{
-        return tmpnode->factornode->node.visit(tmpnode->factornode);
+        return (int)tmpnode->factornode->node.visit(tmpnode->factornode);
     }
 
     return datatype;
 }
 
-//type
-void* TypeNode_visit(void* node){
+//Type
+int TypeNode_visit(void* node){
 
     return 0;
 }
 
-Node* newTypeNode( int fl, int fc, StandTypeNode* standtypenode, int array_start, int array_end, TypeNode* type, int ll, int lc ){
+TypeNode* newTypeNode( int fl, int fc, StandTypeNode* standtypenode, int array_start, int array_end, TypeNode* type, int ll, int lc ){
     TypeNode* tmpnode = (TypeNode*) malloc ( sizeof(TypeNode) );
     tmpnode->standtypenode = standtypenode;
     tmpnode->array_start = array_start;
@@ -1617,12 +1610,9 @@ Node* newTypeNode( int fl, int fc, StandTypeNode* standtypenode, int array_start
 }
 
 
-//var
+//Var
 
-extern list* listRoot;
-extern int scope;
-
-Node* newVarNode( int fl, int fc, char* id, TailNode* tailnode, int ll, int lc ){
+VarNode* newVarNode( int fl, int fc, char* id, TailNode* tailnode, int ll, int lc ){
     VarNode* tmpnode = (VarNode*) malloc ( sizeof(VarNode) );
     tmpnode->id = id;
     tmpnode->tailnode = tailnode;
@@ -1636,7 +1626,7 @@ Node* newVarNode( int fl, int fc, char* id, TailNode* tailnode, int ll, int lc )
     return tmpnode;
 }
 
-void* VarNode_visit(void* node){
+int VarNode_visit(void* node){
     VarNode* tmpnode = (VarNode*) node;
     
     list* listTemp = NULL;
@@ -1644,13 +1634,10 @@ void* VarNode_visit(void* node){
     symbolobj* currTemp = NULL;
 
     if ( GetList( listRoot, &listTemp, tmpnode->id ) ){
-        // if ( (listTemp->nodeType == Function) && ( ((funcsymbolobj*)listTemp->data)->check == 1 ) )
-        //     fprintf(stderr, ASSIG_TYPE, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column);
 
         currTemp = listTemp->data;
         datatype = currTemp->type;
     }else{
-        // undeclared variables
         fprintf(stderr, UNDEC_VAR, tmpnode->node.loc.first_line, tmpnode->node.loc.first_column, tmpnode->id );
     }
 

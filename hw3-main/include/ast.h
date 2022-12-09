@@ -41,7 +41,7 @@ typedef enum{   NODE_Prog,
 typedef struct NodeTag{
 	NodeType type;
 	LocType  loc;
-	void* (*visit)(void*);
+	int (*visit)(void*);
 } Node;
 
 // /*

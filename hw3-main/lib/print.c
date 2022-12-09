@@ -1,7 +1,7 @@
 #include <string.h>
 #include "stdlib.h"
 
-#include "list.h"
+#include "print.h"
 
 void list_push_back(list* root, list* next){
     list* curr = root;
@@ -10,6 +10,7 @@ void list_push_back(list* root, list* next){
     }
     curr->next = next;
     next->prev = curr;
+    
     return;
 }
 
@@ -61,8 +62,9 @@ void list_printTable(list* root){
             curr = curr->next;
         }
         while(curr != NULL){
-            char dataTemp[40] = { };
-            char dataCurr[40] = { };
+            char dataTemp[100] = {""};
+            char dataCurr[100] = {""};
+            // char* dataCurr;
             if ( curr->nodeType == Data ){
                 // data
                 symbolobj* tmpnode = curr->data;
@@ -105,8 +107,8 @@ void list_printTable(list* root){
                 while (tmpnodePassInType != NULL){
                     // check type
                     
-                    char ArrayTemp[40] = { };
-                    char ArrayCurr[40] = { };
+                    char ArrayTemp[50] = { };
+                    char ArrayCurr[50] = { };
                     symbolobj* tmpnodeArray = tmpnodePassInType->data;
                     while(tmpnodeArray->type == Array){
                         strcpy( ArrayCurr, ArrayTemp );

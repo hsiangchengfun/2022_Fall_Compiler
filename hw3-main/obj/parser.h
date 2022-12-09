@@ -44,11 +44,12 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 37 "parser.y"
+#line 46 "parser.y"
 
     #include "ast.h"
+    #include "lib.h"
 
-#line 52 "obj/parser.h"
+#line 53 "obj/parser.h"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -106,14 +107,44 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 41 "parser.y"
+#line 51 "parser.y"
 
     int val;
     char* text;
     double dval;
     Node* node;
+    ProgNode* ProgNode;
+    ParameterListNode* ParameterListNode;
+    IdentListNode* IdentListNode; 
+    ProcedureStatementNode* ProcedureStatementNode;
+    TypeNode* TypeNode;
+    SimpleExpressionNode* SimpleExpressionNode;
+    BoolExpNode* BoolExpNode;
+    TailNode* TailNode;
+    FactorNode* FactorNode;
+    NumNode* NumNode;
+    ExpressionListNode* ExpressionListNode;
+    ExpressionNode* ExpressionNode;
+    DeclarNode* DeclarNode;
+    ArgumentsNode* ArgumentsNode;
+    AddOpNode* AddOpNode;
+    RelopNode* RelopNode;
+    TermNode* TermNode;
+    StandTypeNode* StandTypeNode;
+    CompoundStatementNode* CompoundStatementNode;
+    VarNode* VarNode;
+    StatementNode* StatementNode;
+    SubHeadNode* SubHeadNode;
+    StatementListNode* StatementListNode;
+    SubDeclarNode* SubDeclarNode;
+    OptionalStatementSNode* OptionalStatementSNode;
+    MulNode* MulNode;
+    StatementlistNode* StatementlistNode;
+    SubDeclarSNode* SubDeclarSNode;
+    OptionalVarNode* OptionalVarNode;
 
-#line 117 "obj/parser.h"
+
+#line 148 "obj/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
