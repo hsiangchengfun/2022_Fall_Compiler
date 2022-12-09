@@ -63,7 +63,7 @@ void list_printTable(list* root){
         }
         while(curr != NULL){
             char dataTemp[100] = {""};
-            char dataCurr[100] = {""};
+            char dataCurr[40] = {""};
             // char* dataCurr;
             if ( curr->nodeType == Data ){
                 // data
@@ -103,12 +103,12 @@ void list_printTable(list* root){
 
                 int counter = 0;
                 // check pass in data type
-                passinobj* tmpnodePassInType = ((funcsymbolobj*)curr->data)->passInType;
+                passinobj* tmpnodePassInType = (passinobj*)((funcsymbolobj*)curr->data)->passInType;
                 while (tmpnodePassInType != NULL){
                     // check type
                     
-                    char ArrayTemp[50] = { };
-                    char ArrayCurr[50] = { };
+                    char ArrayTemp[49] = { };
+                    char ArrayCurr[40] = { };
                     symbolobj* tmpnodeArray = tmpnodePassInType->data;
                     while(tmpnodeArray->type == Array){
                         strcpy( ArrayCurr, ArrayTemp );
@@ -144,7 +144,7 @@ void list_printTable(list* root){
                     else
                         sprintf(dataTemp, "%s", ArrayTemp);
 
-                    tmpnodePassInType = tmpnodePassInType->next;
+                    tmpnodePassInType = (passinobj*)tmpnodePassInType->next;
                     counter++;
                 }
 

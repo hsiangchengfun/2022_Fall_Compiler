@@ -274,6 +274,7 @@ int ProgNode_visit();
 typedef struct prognode{
     Node node;
     char* id;
+    int (*visit)(void*);
     IdentListNode* identlist;
     DeclarNode* declar;
     SubDeclarSNode* subdeclar;

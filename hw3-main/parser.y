@@ -133,7 +133,7 @@ prog: PROGRAM IDENTIFIER LPAREN identifier_list
         fc=@1.first_column;
         ll=@10.first_line;
         lc=@10.first_column;
-        root = newProgNode( fl ,fc , $2, $4, $7, $8, $9, ll, lc );
+        root = (Node*)newProgNode( fl ,fc , $2, $4, $7, $8, $9, ll, lc );
     }
     ;
 

@@ -5,7 +5,7 @@
 #include "info.h"
 #include "stdio.h"
 #include "print.h"
-
+#include "string.h"
 
 char* buffer;
 // stderr
@@ -93,14 +93,14 @@ BoolExpNode* newBoolExpNode( int fl, int fc, SimpleExpressionNode* first, RelopN
 int BoolExpNode_visit(void* node){
     BoolExpNode* tmpnode = (BoolExpNode*) node;
     
-    int* tmpnode1;
-    int* tmpnode2;
+    int tmpnode1;
+    int tmpnode2;
     int datatype = -1;
 
     if (tmpnode->relop != 0){
-        tmpnode1 = (int *)tmpnode->first->node.visit(tmpnode->first);
+        tmpnode1 = tmpnode->first->node.visit(tmpnode->first);
         tmpnode->relop->node.visit(tmpnode->relop);
-        tmpnode2 = (int *) tmpnode->least->node.visit(tmpnode->least);
+        tmpnode2 = tmpnode->least->node.visit(tmpnode->least);
 
         if ( ((int)tmpnode1 >= 0) && ((int)tmpnode2 >= 0) && ((int)tmpnode1 != tmpnode2) ){
             switch (tmpnode->relop->type){
@@ -724,6 +724,7 @@ int ProcedureStatementNode_visit(void* node){
     if (tmpnode->expressionlistnode != 0)
         tmpnode->expressionlistnode->node.visit(tmpnode->expressionlistnode);
 
+    return 0;
 }
 
 
@@ -780,6 +781,7 @@ int ProgNode_visit(void* node){
     list_printTable(listRoot);
     SHOW_SYMTAB_TAIL();
 
+    return 0;
 }
 
 
@@ -825,7 +827,7 @@ SimpleExpressionNode* newSimpleExpressionNode( int fl, int fc, SimpleExpressionN
 int SimpleExpressionNode_visit(void* node){
     SimpleExpressionNode* tmpnode = (SimpleExpressionNode*) node;
 
-    int* tmpnode1, *tmpnode2; 
+    int tmpnode1, tmpnode2; 
     int datatype = -1;
 
     if ( tmpnode->addnode != 0 ){
@@ -906,9 +908,9 @@ int StatementNode_visit(void* node){
     // store the node from symbol table
     list* listTemp;
     // counter for counting elements
-    int counter;
     // store data type
-    int* tmpnode1, *tmpnode2;
+    int tmpnode1;
+    int tmpnode2;
 
     switch (tmpnode->type)
     {
@@ -916,10 +918,10 @@ int StatementNode_visit(void* node){
     // variable ASSIGNMENT expression
 
         // visit variable
-        tmpnode1 = (int*) tmpnode->varnode->node.visit(tmpnode->varnode);
+        tmpnode1 = tmpnode->varnode->node.visit(tmpnode->varnode);
 
         // visit expression
-        tmpnode2 = (int*) tmpnode->expressionnode->node.visit(tmpnode->expressionnode);
+        tmpnode2 = tmpnode->expressionnode->node.visit(tmpnode->expressionnode);
 
 
         if ( ((int)tmpnode1 >= 0) && ((int)tmpnode2 >= 0) && ((int)tmpnode1 != tmpnode2) )
@@ -1560,7 +1562,7 @@ int TermNode_visit(void* node){
     TermNode* tmpnode = (TermNode*) node;
 
    
-    int* tmpnode1, *tmpnode2;
+    int tmpnode1, tmpnode2;
     int datatype = -1;
 
     if (tmpnode->mulnode != 0){
