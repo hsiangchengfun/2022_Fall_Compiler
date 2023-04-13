@@ -1,0 +1,35 @@
+create a scope
+add new symbol aa
+add new symbol a
+add new symbol b
+add new symbol c
+add new symbol bb
+create a scope
+add new symbol a
+add new symbol b
+add new symbol c
+add new symbol d
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|d           |   1   |int[1~2]                                        |
+|c           |   1   |int                                             |
+|b           |   1   |int                                             |
+|a           |   1   |int                                             |
+|bb          |   0   |int (int, int)                                  |
+|c           |   0   |real                                            |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|aa          |   0   |void                                            |
+-----------------------------------------------------------------------
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|bb          |   0   |int (int, int)                                  |
+|c           |   0   |real                                            |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|aa          |   0   |void                                            |
+-----------------------------------------------------------------------

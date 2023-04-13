@@ -1,0 +1,26 @@
+15:8: redefined variable a
+20:11: redefined variable a
+23:7: undeclared variable qqq
+23:13: undeclared variable rrr
+24:14: undeclared function f
+35:4: missing return value of function addition
+35:4: redefined function addition
+39:10: type errors on assignment statement
+43:4: missing return value of function addition
+43:4: redefined function addition
+47:10: type errors on assignment statement
+55:10: undeclared variable sum
+55:17: undeclared variable sum
+67:7: type errors on assignment statement
+69:30: type errors in arithmetic expressions +
+73:12: undeclared function extf
+73:21: undeclared variable sum
+79:14: undeclared function bbb
+79:22: undeclared variable sum
+87:31: type errors in arithmetic expressions +
+90:31: type errors in arithmetic expressions +
+93:31: type errors in arithmetic expressions +
+103:16: type errors in arithmetic expressions <=
+105:10: undeclared variable sum
+105:17: undeclared variable sum
+105:23: too many subscripten on a

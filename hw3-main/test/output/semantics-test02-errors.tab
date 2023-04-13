@@ -1,0 +1,119 @@
+create a scope
+add new symbol foo
+add new symbol a
+add new symbol b
+add new symbol c
+add new symbol d
+add new symbol e
+add new symbol g
+add new symbol h
+add new symbol k
+add new symbol sort
+create a scope
+add new symbol a
+add new symbol b
+add new symbol c
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|c           |   1   |int                                             |
+|b           |   1   |int                                             |
+|a           |   1   |int[1~10]                                       |
+|sort        |   0   |void (int[1~10])                                |
+|k           |   0   |real[23~57][23~57]                              |
+|h           |   0   |real                                            |
+|g           |   0   |real                                            |
+|e           |   0   |int[1~10]                                       |
+|d           |   0   |int[1~10]                                       |
+|c           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------
+add new symbol addition
+create a scope
+add new symbol a
+add new symbol b
+add new symbol c
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|c           |   1   |int                                             |
+|b           |   1   |int                                             |
+|a           |   1   |int                                             |
+|addition    |   0   |int (int, int)                                  |
+|sort        |   0   |void (int[1~10])                                |
+|k           |   0   |real[23~57][23~57]                              |
+|h           |   0   |real                                            |
+|g           |   0   |real                                            |
+|e           |   0   |int[1~10]                                       |
+|d           |   0   |int[1~10]                                       |
+|c           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------
+create a scope
+add new symbol c
+add new symbol d
+add new symbol e
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|e           |   1   |int                                             |
+|d           |   1   |int                                             |
+|c           |   1   |int                                             |
+|addition    |   0   |int (int, int)                                  |
+|sort        |   0   |void (int[1~10])                                |
+|k           |   0   |real[23~57][23~57]                              |
+|h           |   0   |real                                            |
+|g           |   0   |real                                            |
+|e           |   0   |int[1~10]                                       |
+|d           |   0   |int[1~10]                                       |
+|c           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------
+create a scope
+add new symbol a
+add new symbol b
+add new symbol c
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|c           |   1   |int                                             |
+|b           |   1   |real                                            |
+|a           |   1   |real                                            |
+|addition    |   0   |int (int, int)                                  |
+|sort        |   0   |void (int[1~10])                                |
+|k           |   0   |real[23~57][23~57]                              |
+|h           |   0   |real                                            |
+|g           |   0   |real                                            |
+|e           |   0   |int[1~10]                                       |
+|d           |   0   |int[1~10]                                       |
+|c           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|addition    |   0   |int (int, int)                                  |
+|sort        |   0   |void (int[1~10])                                |
+|k           |   0   |real[23~57][23~57]                              |
+|h           |   0   |real                                            |
+|g           |   0   |real                                            |
+|e           |   0   |int[1~10]                                       |
+|d           |   0   |int[1~10]                                       |
+|c           |   0   |int                                             |
+|b           |   0   |int                                             |
+|a           |   0   |int                                             |
+|foo         |   0   |void                                            |
+-----------------------------------------------------------------------

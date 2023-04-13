@@ -1,0 +1,14 @@
+create a scope
+add new symbol aaa
+add new symbol aa
+add new symbol bb
+add new symbol cc
+close a scope
+-----------------------------------------------------------------------
+|    Name    | Scope |                   Type                         |
+-----------------------------------------------------------------------
+|cc          |   0   |int                                             |
+|bb          |   0   |int                                             |
+|aa          |   0   |int                                             |
+|aaa         |   0   |void                                            |
+-----------------------------------------------------------------------

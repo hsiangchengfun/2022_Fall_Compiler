@@ -19,6 +19,8 @@
         "procedurestatement.h": "c",
         "standardtype.h": "c",
         "statementlist.h": "c",
-        "subprogramdeclaration.h": "c"
+        "subprogramdeclaration.h": "c",
+        "codegen.h": "c",
+        "ast.h": "c"
     }
 }
